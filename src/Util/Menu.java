@@ -67,9 +67,22 @@ public class Menu {
                 }
             }
             case 2 -> {
-                //Consultar cadastro de funcionário através do cpf
-                System.out.println("Insira o CPF do funcionário:");
-                Long cpf = inputNumber.nextLong();
+
+                consultarFuncionario();
+
+                desejaAbrirMenu();
+
+            }
+
+            case 3 ->{
+
+                System.out.println("A implementar...");
+
+            }
+            case 4 ->{
+
+                excluirFuncionario();
+
             }
 
             case 5 -> {
@@ -77,8 +90,6 @@ public class Menu {
                 System.exit(0);
             }
         }
-
-
     }
 
     public static void pularLinha(){
@@ -118,32 +129,6 @@ public class Menu {
             cpf = inputNumber.nextLong();
         }
 
-        for (Funcionario funcionario: dataBase.retornarLista()) {
-            while(cpf.equals(funcionario.getCpf())){
-                System.out.println("Esse CPF já foi cadastrado. Deseja tentar outro cpf? (S/N)");
-                String stringOpcao = inputString.next().toUpperCase();
-
-                switch (stringOpcao) {
-                    case "S" -> inserirCpf();
-
-                    case "N" -> {
-                        System.out.println("Deseja abrir o menu novamente?");
-                        stringOpcao = inputString.next().toUpperCase();
-
-                        switch (stringOpcao) {
-
-                            case "S" -> abrirMenu();
-
-                            case "N" -> System.exit(0);
-
-                            default -> opcaoInvalida();
-                        }
-                    }
-                }
-
-            }
-        }
-
         return cpf;
     }
 
@@ -177,7 +162,7 @@ public class Menu {
 
         while(valeTransporte > salario * 0.2 || valeTransporte < salario * 0.1){
             System.out.println("O valor do vale transporte não pode ser inferior a 10% ou superior a 20% do salário do funcionário\n" +
-                    "Valor do salário: " + salario);
+                    "Valor do salário: " + salario + "\n 10%: " + salario * 0.1 + "\n 20%: " + salario * 0.2);
             valeTransporte = inputNumber.nextDouble();
         }
 
@@ -190,7 +175,7 @@ public class Menu {
 
         while(valeSaude > salario * 0.25 || valeSaude < salario * 0.15){
             System.out.println("O valor do vale saúde não pode ser inferior a 15% ou superior a 25% do salário do funcionário\n" +
-                    "Valor do salário: " + salario);
+                    "Valor do salário: " + salario + "\n 15%: " + salario * 0.15 + "\n 25%: " + salario * 0.25);
             valeSaude = inputNumber.nextDouble();
         }
 
@@ -224,18 +209,7 @@ public class Menu {
             switch (stringOpcao) {
                 case "S" -> cadastrarClt();
 
-                case "N" -> {
-                    System.out.println("Deseja abrir o menu novamente: (S/N)");
-                    stringOpcao = inputString.next().toUpperCase();
-                    switch (stringOpcao) {
-
-                        case "S" -> abrirMenu();
-
-                        case "N" -> System.exit(0);
-
-                        default -> opcaoInvalida();
-                    }
-                }
+                case "N" -> desejaAbrirMenu();
 
                 default -> opcaoInvalida();
             }
@@ -274,44 +248,74 @@ public class Menu {
         Pj funcionarioPj = new Pj(nome, sexo, cpf, dataNasc, salario);
 
         if(dataBase.retornarLista().contains(funcionarioPj)){
-            System.out.println("Esse funcionário já foi cadastrado. Deseja cadastrar outro funcionário? (S/N)");
+            System.out.println("Esse CPF já foi registrado. Deseja tentar outro CPF? (S/N)");
             String stringOpcao = inputString.next().toUpperCase();
 
             switch (stringOpcao) {
-                case "S" -> cadastrarPj();
+                case "S" -> inserirCpf();
 
-                case "N" -> {
-                    System.out.println("Deseja abrir o menu novamente: (S/N)");
-                    stringOpcao = inputString.next().toUpperCase();
-                    switch (stringOpcao) {
-
-                        case "S" -> abrirMenu();
-
-                        case "N" -> System.exit(0);
-
-                        default -> opcaoInvalida();
-                    }
-                }
+                case "N" -> desejaAbrirMenu();
 
                 default -> opcaoInvalida();
             }
-            opcaoInvalida();
 
         }else {
             dataBase.cadastrar(funcionarioPj);
 
-            System.out.println("Funcionário registrado com sucesso.\n Deseja abrir o menu novamente? (S/N)");
-            String stringOpcao = inputString.next().toUpperCase();
+            System.out.println("Funcionário registrado com sucesso.");
 
-            switch (stringOpcao) {
+            desejaAbrirMenu();
 
-                case "S" -> abrirMenu();
+        }
+    }
 
-                case "N" -> System.exit(0);
+    public void consultarFuncionario(){
+        boolean contemFuncionario = false;
 
-                default -> opcaoInvalida();
+        Long cpf = inserirCpf();
+
+        for (Funcionario funcionario : dataBase.retornarLista()) {
+
+
+            if (cpf.equals(funcionario.getCpf())) {
+                System.out.println(funcionario);
+
+                contemFuncionario = true;
+
             }
         }
+
+        if(!contemFuncionario){
+            System.out.println("CPF não encontrado.");
+        }
+    }
+
+    public void excluirFuncionario(){
+
+        boolean contemFuncionario = false;
+
+        Long cpf = inserirCpf();
+
+        for (Funcionario funcionario: dataBase.retornarLista()) {
+
+            if(cpf.equals(funcionario.getCpf())){
+
+                dataBase.retornarLista().remove(funcionario);
+                System.out.println("Registro excluido com sucesso.");
+
+                contemFuncionario = true;
+
+            }
+
+
+        }
+
+        if(!contemFuncionario){
+            System.out.println("CPF não encontrado.");
+        }
+
+        desejaAbrirMenu();
+
     }
 
     public void opcaoInvalida(){
@@ -328,6 +332,19 @@ public class Menu {
             case "S" -> abrirMenu();
 
             case "N" -> System.exit(0);
+        }
+    }
+
+    public void desejaAbrirMenu(){
+        System.out.println("Deseja abrir o menu novamente: (S/N)");
+        stringOpcao = inputString.next().toUpperCase();
+        switch (stringOpcao) {
+
+            case "S" -> abrirMenu();
+
+            case "N" -> System.exit(0);
+
+            default -> opcaoInvalida();
         }
     }
 }

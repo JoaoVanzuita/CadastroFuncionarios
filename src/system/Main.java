@@ -9,14 +9,18 @@ public class Main {
         DataBase dataBase = new DataBase();
         Menu menu = new Menu(dataBase);
 
-        menu.abrirMenu();
 
-        /*
+
         Clt clt  = new Clt("João", 'M', 12989148922L, "17/05/2004", 5500, 50, 70 );
         Pj pj = new Pj("Eduardo", 'M', 22489891192L, "28/8/1976", 7000);
+
         dataBase.cadastrar(clt);
         dataBase.cadastrar(pj);
-        System.out.println(dataBase.retornarLista());
+
+        menu.abrirMenu();
+
+
+        /*
         dataBase.editarCadastro(12989148922L, 0);
         System.out.println(clt);
          */

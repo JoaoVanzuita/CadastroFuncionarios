@@ -15,10 +15,6 @@ public class DataBase {
         listaFuncionarios.add(funcionario);
     }
 
-    public void adicionarFuncionario(Funcionario funcionario){
-        this.listaFuncionarios.add(funcionario);
-    }
-
     public Collection<Funcionario> retornarLista(){
         return this.listaFuncionarios;
     }
