@@ -4,23 +4,22 @@ import system.Clt;
 import system.Funcionario;
 import system.Pj;
 
-import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 
 public class DataBase {
 
-    private final ArrayList<Funcionario> listaFuncionarios = new ArrayList<>();
+    private final Collection<Funcionario> listaFuncionarios = new HashSet<>();
 
-    public void cadastrar(){
-
-
-
+    public void cadastrar(Funcionario funcionario){
+        listaFuncionarios.add(funcionario);
     }
 
     public void adicionarFuncionario(Funcionario funcionario){
         this.listaFuncionarios.add(funcionario);
     }
 
-    public ArrayList retornarLista(){
+    public Collection<Funcionario> retornarLista(){
         return this.listaFuncionarios;
     }
 

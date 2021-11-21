@@ -63,7 +63,7 @@ public abstract class Funcionario {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Funcionario that = (Funcionario) o;
-        return getCpf() == that.getCpf();
+        return Objects.equals(getCpf(), that.getCpf());
     }
 
     @Override
