@@ -6,11 +6,11 @@ public abstract class Funcionario {
 
     protected String nome;
     protected char sexo;
-    protected long cpf;
+    protected Long cpf;
     protected String dataNasc;
     protected double salario;
 
-    public Funcionario(String nome, char sexo, long cpf, String dataNasc, double salario) {
+    public Funcionario(String nome, char sexo, Long cpf, String dataNasc, double salario) {
         this.setNome(nome);
         this.setSexo(sexo);
         this.setCpf(cpf);
@@ -34,11 +34,11 @@ public abstract class Funcionario {
         this.sexo = sexo;
     }
 
-    public long getCpf() {
+    public Long getCpf() {
         return cpf;
     }
 
-    public void setCpf(long cpf) {
+    public void setCpf(Long cpf) {
         this.cpf = cpf;
     }
 

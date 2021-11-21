@@ -2,6 +2,7 @@ package Util;
 
 import system.Clt;
 import system.Funcionario;
+import system.Pj;
 
 import java.util.ArrayList;
 
@@ -9,7 +10,13 @@ public class DataBase {
 
     private final ArrayList<Funcionario> listaFuncionarios = new ArrayList<>();
 
-    public void cadastrar(Funcionario funcionario){
+    public void cadastrar(){
+
+
+
+    }
+
+    public void adicionarFuncionario(Funcionario funcionario){
         this.listaFuncionarios.add(funcionario);
     }
 
@@ -17,58 +24,101 @@ public class DataBase {
         return this.listaFuncionarios;
     }
 
-    public void editarCadastro(Clt funcionario, int opcao) {
+    public void editarCadastro(Long cpf, int opcao) {
 
+        //variável usada para informar se o registro com o cfp digitado foi encontrado no listaFuncionarios
+        Boolean cpfValido = false;
+
+        for (Funcionario funcionario1: listaFuncionarios) {
+
+            //procura um funcionário com o cpf igual ao inserido pelo usuário
+            if(cpf == funcionario1.getCpf()) {
+                if (funcionario1 instanceof Pj) {
+
+                    //transforma tipo do funcionario1 para Pj
+                    Pj funcionarioPj = (Pj) funcionario1;
+
+                    this.atualizarPj(funcionarioPj, opcao);
+
+                } else {
+
+                    //transforma o tipo do funcionario1 para Clt
+                    Clt funcionarioClt = (Clt) funcionario1;
+
+                    this.atualizarClt(funcionarioClt, opcao);
+                }
+                //informa que o registro com o cpf digitado foi encontrado
+                cpfValido= true;
+                break;
+            }
+        }
+
+        //informa caso o registro com o cpf digitado não tenha sido encontrado
+        if(!cpfValido) {
+            System.out.println("CPF digitado inválido");
+        }
+
+    }
+
+
+    public void atualizarPj(Pj funcionarioPj, int opcao){
 
         switch (opcao) {
-            case 0:
-
+            case 0 -> {
                 String nome = null;
-                funcionario.setNome(nome);
-
-                break;
-
-            case 1:
-
+                funcionarioPj.setNome(nome);
+            }
+            case 1 -> {
                 char sexo = ' ';
-                funcionario.setSexo(sexo);
-
-                break;
-
-            case 2:
-
+                funcionarioPj.setSexo(sexo);
+            }
+            case 2 -> {
                 long cpf = 00000000000L;
-                funcionario.setCpf(cpf);
-
-                break;
-
-            case 3:
-
+                funcionarioPj.setCpf(cpf);
+            }
+            case 3 -> {
                 String dataNasc;
-                funcionario.setDataNasc("__/__/____");
-
-                break;
-
-            case 4:
+                funcionarioPj.setDataNasc("__/__/____");
+            }
+            case 4 -> {
                 double salario = 0;
-                funcionario.setSalario(salario);
+                funcionarioPj.setSalario(salario);
+            }
+        }
+    }
 
-                break;
 
-            case 5:
+    public  void atualizarClt(Clt funcionarioClt, int opcao){
 
+        switch (opcao) {
+            case 0 -> {
+                String nome = null;
+                funcionarioClt.setNome(nome);
+            }
+            case 1 -> {
+                char sexo = ' ';
+                funcionarioClt.setSexo(sexo);
+            }
+            case 2 -> {
+                long cpf = 00000000000L;
+                funcionarioClt.setCpf(cpf);
+            }
+            case 3 -> {
+                String dataNasc;
+                funcionarioClt.setDataNasc("__/__/____");
+            }
+            case 4 -> {
+                double salario = 0;
+                funcionarioClt.setSalario(salario);
+            }
+            case 5 -> {
                 double valeTransporte = 0;
-                funcionario.setValeTransporte(valeTransporte);
-
-                break;
-
-            case 6:
-
+                funcionarioClt.setValeTransporte(valeTransporte);
+            }
+            case 6 -> {
                 double valeSaude = 0;
-                funcionario.setValeSaude(valeSaude);
-
-            default:
-                System.out.println("Opção inválida");
+                funcionarioClt.setValeSaude(valeSaude);
+            }
         }
     }
 }
