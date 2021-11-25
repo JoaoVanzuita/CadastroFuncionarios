@@ -22,16 +22,15 @@ public class DataBase {
     public void editarCadastro(Long cpf, int opcao) {
 
         //variável usada para informar se o registro com o cfp digitado foi encontrado no listaFuncionarios
-        Boolean cpfValido = false;
+        boolean cpfValido = false;
 
         for (Funcionario funcionario1: listaFuncionarios) {
 
             //procura um funcionário com o cpf igual ao inserido pelo usuário
-            if(cpf == funcionario1.getCpf()) {
-                if (funcionario1 instanceof Pj) {
+            if(cpf.equals(funcionario1.getCpf())) {
+                if (funcionario1 instanceof Pj funcionarioPj) {
 
                     //transforma tipo do funcionario1 para Pj
-                    Pj funcionarioPj = (Pj) funcionario1;
 
                     this.atualizarPj(funcionarioPj, opcao);
 

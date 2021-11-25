@@ -6,11 +6,11 @@ import java.util.Locale;
 import java.util.Scanner;
 
 public class Menu {
-    Scanner inputNumber = new Scanner(System.in).useLocale(Locale.forLanguageTag("pt-BR"));
-    Scanner inputString = new Scanner(System.in).useLocale(Locale.forLanguageTag("pt-BR"));
+    private final Scanner inputNumber = new Scanner(System.in).useLocale(Locale.forLanguageTag("pt-BR"));
+    private final Scanner inputString = new Scanner(System.in).useLocale(Locale.forLanguageTag("pt-BR"));
     int intOpcao;
-    String stringOpcao;
-    DataBase dataBase;
+    private String stringOpcao;
+    private DataBase dataBase;
 
     public Menu(DataBase database) {
         this.setDataBase(database);
@@ -61,10 +61,11 @@ public class Menu {
                         abrirMenu();
                     }
 
-                    default -> {
-                        opcaoInvalida();
-                    }
+                    default -> opcaoInvalida();
+
                 }
+
+                desejaAbrirMenu();
             }
             case 2 -> {
 
@@ -78,10 +79,33 @@ public class Menu {
 
                 System.out.println("A implementar...");
 
+                System.out.println("Deseja editar um funcionário PJ ou CLT?");
+                stringOpcao = inputString.next().toUpperCase();
+
+                switch (stringOpcao) {
+
+                    case "CLT" -> editarClt();
+
+                    case "PJ" -> editarPj();
+
+                    case "CANCEL" -> {
+                        System.out.println("Cancelado.");
+
+                        abrirMenu();
+                    }
+
+                    default -> opcaoInvalida();
+
+                }
+
+                desejaAbrirMenu();
+
             }
             case 4 ->{
 
                 excluirFuncionario();
+
+                desejaAbrirMenu();
 
             }
 
@@ -89,6 +113,9 @@ public class Menu {
                 System.out.println("Encerrando...");
                 System.exit(0);
             }
+
+            default -> opcaoInvalida();
+
         }
     }
 
@@ -102,6 +129,7 @@ public class Menu {
 
     public String inserirNome(){
         System.out.println("Insira o nome do funcionário:");
+
         String nome = inputString.next();
 
         return nome;
@@ -182,6 +210,7 @@ public class Menu {
         return valeSaude;
     }
 
+    //transferir para DataBase
     public void cadastrarClt(){
 
         String nome = inserirNome();
@@ -218,20 +247,11 @@ public class Menu {
         }else {
             dataBase.cadastrar(funcionarioClt);
 
-            System.out.println("Funcionário registrado com sucesso.\n Deseja abrir o menu novamente? (S/N)");
-            String stringOpcao = inputString.next().toUpperCase();
-
-            switch (stringOpcao) {
-
-                case "S" -> abrirMenu();
-
-                case "N" -> System.exit(0);
-
-                default -> opcaoInvalida();
-            }
+            System.out.println("Funcionário " + funcionarioClt.getNome() +  " registrado com sucesso.");
         }
     }
 
+    //transferir para DataBase
     public void cadastrarPj(){
         String nome = inserirNome();
 
@@ -269,6 +289,7 @@ public class Menu {
         }
     }
 
+    //transferir para DataBase
     public void consultarFuncionario(){
         boolean contemFuncionario = false;
 
@@ -290,6 +311,7 @@ public class Menu {
         }
     }
 
+    //transferir para DataBase
     public void excluirFuncionario(){
 
         boolean contemFuncionario = false;
@@ -318,20 +340,228 @@ public class Menu {
 
     }
 
+    //transferir para DataBase
+    public void editarClt(){
+
+        Long cpf = inserirCpf();
+        Clt funcionarioClt = null;
+
+        for (Funcionario funcionario: dataBase.retornarLista()) {
+
+            if(cpf.equals(funcionario.getCpf())){
+                funcionarioClt = (Clt)funcionario;
+            }
+        }
+
+
+        if(funcionarioClt == null){
+            System.out.println("Registro não encontrado.");
+
+            desejaAbrirMenu();
+
+        }else {
+
+            System.out.println("Digite a opção correspondente ao dado que deseja atualizar do funcionário " + funcionarioClt.getNome());
+            System.out.println("1 - nome");
+            System.out.println("2 - sexo");
+            System.out.println("3 - cpf");
+            System.out.println("4 - data de nascimento");
+            System.out.println("5 - salário");
+            System.out.println("6 - vale transporte");
+            System.out.println("7 - vale saúde");
+
+            intOpcao = inputNumber.nextInt();
+
+        }
+
+        assert funcionarioClt != null;
+
+        switch (intOpcao){
+
+            case 1 ->{
+
+                String nome = inserirNome();
+
+                funcionarioClt.setNome(nome);
+
+
+            }
+
+            case 2 ->{
+
+                String stringSexo = inserirSexo();
+                    //converter sexo de String para char
+                    char sexo = stringSexo.charAt(0);
+
+                funcionarioClt.setSexo(sexo);
+
+
+            }
+
+            case 3 ->{
+
+                cpf = inserirCpf();
+
+                funcionarioClt.setCpf(cpf);
+
+
+            }
+
+            case 4 ->{
+
+                String dataNasc = inserirDataNasc();
+
+                funcionarioClt.setDataNasc(dataNasc);
+
+
+            }
+
+            case 5 ->{
+
+                double salario = inserirSalario();
+
+                funcionarioClt.setSalario(salario);
+
+
+            }
+
+            case 6 ->{
+
+                double valeTransporte = inserirValeTransporte(funcionarioClt.getSalario());
+
+                funcionarioClt.setValeTransporte(valeTransporte);
+
+
+            }
+
+            case 7 ->{
+
+                double valeSaude = inserirValeSaude(funcionarioClt.getSalario());
+
+                funcionarioClt.setValeSaude(valeSaude);
+
+
+            }
+
+        }
+
+        System.out.println("Registro "  + funcionarioClt.getNome() + " atualizado com sucesso.");
+
+        desejaAbrirMenu();
+
+    }
+
+    //transferir para DataBase
+    public void editarPj(){
+
+        Long cpf = inserirCpf();
+        Pj funcionarioPj = null;
+
+        for (Funcionario funcionario: dataBase.retornarLista()) {
+
+            if(cpf.equals(funcionario.getCpf())){
+                funcionarioPj = (Pj)funcionario;
+            }
+        }
+
+
+        if(funcionarioPj == null){
+            System.out.println("Registro não encontrado.");
+
+            desejaAbrirMenu();
+
+        }else {
+
+            System.out.println("Digite a opção correspondente ao dado que deseja atualizar do funcionário " + funcionarioPj.getNome());
+            System.out.println("1 - nome");
+            System.out.println("2 - sexo");
+            System.out.println("3 - cpf");
+            System.out.println("4 - data de nascimento");
+            System.out.println("5 - salário");
+
+
+            intOpcao = inputNumber.nextInt();
+
+        }
+
+        assert funcionarioPj != null;
+
+        switch (intOpcao){
+
+            case 1 ->{
+
+                String nome = inserirNome();
+
+                funcionarioPj.setNome(nome);
+
+
+            }
+
+            case 2 ->{
+
+                String stringSexo = inserirSexo();
+                //converter sexo de String para char
+                char sexo = stringSexo.charAt(0);
+
+                funcionarioPj.setSexo(sexo);
+
+
+            }
+
+            case 3 ->{
+
+                cpf = inserirCpf();
+
+                funcionarioPj.setCpf(cpf);
+
+
+            }
+
+            case 4 ->{
+
+                String dataNasc = inserirDataNasc();
+
+                funcionarioPj.setDataNasc(dataNasc);
+
+
+            }
+
+            case 5 ->{
+
+                double salario = inserirSalario();
+
+                funcionarioPj.setSalario(salario);
+
+
+            }
+        }
+
+        System.out.println("Registro "  + funcionarioPj.getNome() + " atualizado com sucesso.");
+
+        desejaAbrirMenu();
+
+    }
+
     public void opcaoInvalida(){
 
-        System.out.println("Opção inválida. Deseja abrir o menu novamente? (S/N)");
-        String stringOpcao = inputString.next().toUpperCase();
-
-        while(!stringOpcao.equals("S") && !stringOpcao.equals("N")){
             System.out.println("Opção inválida. Deseja abrir o menu novamente? (S/N)");
-            stringOpcao = inputString.next().toUpperCase();
-        }
+            String stringOpcao = inputString.next().toUpperCase();
+
+
+         while(!stringOpcao.equals("S") && !stringOpcao.equals("N")){
+
+             System.out.println("Opção inválida. Deseja abrir o menu novamente? (S/N)");
+             stringOpcao = inputString.next().toUpperCase();
+
+         }
+
+
 
         switch (stringOpcao) {
             case "S" -> abrirMenu();
 
             case "N" -> System.exit(0);
+
         }
     }
 

@@ -10,20 +10,15 @@ public class Main {
         Menu menu = new Menu(dataBase);
 
 
+        //criando registros para testes
+        Clt clt  = new Clt("Teste Clt", 'M', 12345678900L, "17/05/2004", 5500, 850, 850 );
+        Pj pj = new Pj("Teste Pj", 'M', 98765432100L, "17/05/2004", 5500);
 
-        Clt clt  = new Clt("João", 'M', 12989148922L, "17/05/2004", 5500, 50, 70 );
-        Pj pj = new Pj("Eduardo", 'M', 22489891192L, "28/8/1976", 7000);
-
+        //adicionan do registros para testes
         dataBase.cadastrar(clt);
         dataBase.cadastrar(pj);
 
         menu.abrirMenu();
-
-
-        /*
-        dataBase.editarCadastro(12989148922L, 0);
-        System.out.println(clt);
-         */
 
     }
 }

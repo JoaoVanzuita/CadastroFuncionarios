@@ -72,7 +72,7 @@ public abstract class Funcionario {
     }
 
 
-    public void bonus(int porcentagem){
+    public void bonus(int porcentagem) {
         this.setSalario(this.getSalario() + (this.getSalario() / 100) * porcentagem);
     }
 
