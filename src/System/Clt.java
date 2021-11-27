@@ -1,15 +1,15 @@
-package system;
+package System;
 
 public class Clt extends Funcionario {
 
     private double valeTransporte, valeSaude;
 
-    public Clt(String nome, char sexo, long cpf, String dataNasc, double salario, double valeTransporte, double valeSaude) {
+    public Clt(String nome, char sexo, Long cpf, String dataNasc, double salario, double valeTransporte, double valeSaude) {
         super(nome, sexo, cpf, dataNasc, salario);
-        this.setValeTransporte(valeTransporte);
-        this.setValeSaude(valeSaude);
-        this.setSalario(this.descontarBeneficios(valeTransporte, valeSaude));
+        this.valeTransporte = valeTransporte;
+        this.valeSaude = valeSaude;
     }
+
 
     public double getValeTransporte() {
         return valeTransporte;

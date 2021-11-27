@@ -1,4 +1,4 @@
-package system;
+package System;
 
 import java.util.Objects;
 
@@ -11,11 +11,11 @@ public abstract class Funcionario {
     protected double salario;
 
     public Funcionario(String nome, char sexo, Long cpf, String dataNasc, double salario) {
-        this.setNome(nome);
-        this.setSexo(sexo);
-        this.setCpf(cpf);
-        this.setDataNasc(dataNasc);
-        this.setSalario(salario);
+        this.nome = nome;
+        this.sexo = sexo;
+        this.cpf = cpf;
+        this.dataNasc = dataNasc;
+        this.salario = salario;
     }
 
     public String getNome() {

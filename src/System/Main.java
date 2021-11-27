@@ -1,4 +1,4 @@
-package system;
+package System;
 
 import Util.DataBase;
 import Util.Menu;
