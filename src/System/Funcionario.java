@@ -71,19 +71,4 @@ public abstract class Funcionario {
         return Objects.hash(getCpf());
     }
 
-
-    public void bonus(int porcentagem) {
-        this.setSalario(this.getSalario() + (this.getSalario() / 100) * porcentagem);
-    }
-
-    @Override
-    public String toString() {
-        return "Funcionario{" +
-                "nome='" + nome + '\'' +
-                ", sexo=" + sexo +
-                ", cpf=" + cpf +
-                ", dataNasc='" + dataNasc + '\'' +
-                ", salario=" + salario +
-                '}';
-    }
 }

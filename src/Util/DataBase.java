@@ -14,11 +14,12 @@ public class DataBase {
     private final Scanner inputNumber = new Scanner(System.in).useLocale(Locale.forLanguageTag("pt-BR"));
     private final Scanner inputString = new Scanner(System.in).useLocale(Locale.forLanguageTag("pt-BR"));
     private final Collection<Funcionario> listaFuncionarios = new HashSet<>();
-    private int intOpcao;
 
 
     public void cadastrar(Funcionario funcionario) {
         listaFuncionarios.add(funcionario);
+
+        System.out.println("Funcionário " + funcionario.getNome() + " cadastrado com sucesso." );
     }
 
     public Collection<Funcionario> retornarLista() {
@@ -153,60 +154,38 @@ public class DataBase {
 
     public void consultarFuncionario(Long cpf) {
 
-        for (Funcionario funcionario : listaFuncionarios) {
+        for (Funcionario funcionario0 : listaFuncionarios) {
 
-            if (cpf.equals(funcionario.getCpf())) {
+            if (cpf.equals(funcionario0.getCpf())) {
 
-                System.out.println(funcionario);
+                if(funcionario0 instanceof Pj){
 
+                    Pj funcionario = (Pj)funcionario0;
+
+                    System.out.println(funcionario);
+
+                }else if(funcionario0 instanceof Clt){
+
+                    Clt funcionario = (Clt)funcionario0;
+
+                    System.out.println(funcionario);
+
+                }
+
+                break;
             }
         }
+    }
+
+    public void excluirFuncionario(Funcionario funcionario) {
+
+        listaFuncionarios.remove(funcionario);
+
+        System.out.println("Registro " + funcionario.getNome() + " excluído com sucesso.");
 
     }
 
-    public void excluirFuncionario() {
-
-        boolean contemFuncionario = false;
-
-        Long cpf = inserirCpf();
-
-        for (Funcionario funcionario : this.listaFuncionarios) {
-
-            if (cpf.equals(funcionario.getCpf())) {
-
-                listaFuncionarios.remove(funcionario);
-                System.out.println("Registro excluido com sucesso.");
-
-                contemFuncionario = true;
-
-            }
-
-        }
-
-        if (!contemFuncionario) {
-            System.out.println("CPF não encontrado.");
-        }
-
-    }
-
-    public void editarClt() {
-
-        Long cpf = inserirCpf();
-        Clt funcionarioClt = null;
-
-        for (Funcionario funcionario : listaFuncionarios) {
-
-            if (cpf.equals(funcionario.getCpf())) {
-                funcionarioClt = (Clt) funcionario;
-            }
-        }
-
-
-        if (funcionarioClt == null) {
-            System.out.println("Registro não encontrado.");
-
-
-        } else {
+    public void editarClt(Clt funcionarioClt) {
 
             System.out.println("Digite a opção correspondente ao dado que deseja atualizar do funcionário " + funcionarioClt.getNome());
             System.out.println("1 - nome");
@@ -217,13 +196,9 @@ public class DataBase {
             System.out.println("6 - vale transporte");
             System.out.println("7 - vale saúde");
 
-            intOpcao = inputNumber.nextInt();
+            int intOpcao = inputNumber.nextInt();
 
-        }
-
-        assert funcionarioClt != null;
-
-        switch (intOpcao) {
+            switch (intOpcao) {
 
             case 1 -> {
 
@@ -231,26 +206,23 @@ public class DataBase {
 
                 funcionarioClt.setNome(nome);
 
-
             }
 
             case 2 -> {
 
                 String stringSexo = inserirSexo();
-                //converter sexo de String para char
-                char sexo = stringSexo.charAt(0);
+                    //converter sexo de String para char
+                    char sexo = stringSexo.charAt(0);
 
                 funcionarioClt.setSexo(sexo);
-
 
             }
 
             case 3 -> {
 
-                cpf = inserirCpf();
+                Long cpf = inserirCpf();
 
                 funcionarioClt.setCpf(cpf);
-
 
             }
 
@@ -260,7 +232,6 @@ public class DataBase {
 
                 funcionarioClt.setDataNasc(dataNasc);
 
-
             }
 
             case 5 -> {
@@ -268,7 +239,6 @@ public class DataBase {
                 double salario = inserirSalario();
 
                 funcionarioClt.setSalario(salario);
-
 
             }
 
@@ -278,7 +248,6 @@ public class DataBase {
 
                 funcionarioClt.setValeTransporte(valeTransporte);
 
-
             }
 
             case 7 -> {
@@ -286,7 +255,6 @@ public class DataBase {
                 double valeSaude = inserirValeSaude(funcionarioClt.getSalario());
 
                 funcionarioClt.setValeSaude(valeSaude);
-
 
             }
 
@@ -296,39 +264,17 @@ public class DataBase {
 
     }
 
-    public void editarPj() {
+    public void editarPj(Pj funcionarioPj) {
 
-        Long cpf = inserirCpf();
-        Pj funcionarioPj = null;
-
-        for (Funcionario funcionario : listaFuncionarios) {
-
-            if (cpf.equals(funcionario.getCpf())) {
-                funcionarioPj = (Pj) funcionario;
-            }
-        }
+        System.out.println("Digite a opção correspondente ao dado que deseja atualizar do funcionário " + funcionarioPj.getNome() + "\n");
+        System.out.println("1 - nome\n");
+        System.out.println("2 - sexo\n");
+        System.out.println("3 - cpf\n");
+        System.out.println("4 - data de nascimento\n");
+        System.out.println("5 - salário\n");
 
 
-        if (funcionarioPj == null) {
-            System.out.println("Registro não encontrado.");
-
-            return;
-
-        } else {
-
-            System.out.println("Digite a opção correspondente ao dado que deseja atualizar do funcionário " + funcionarioPj.getNome());
-            System.out.println("1 - nome");
-            System.out.println("2 - sexo");
-            System.out.println("3 - cpf");
-            System.out.println("4 - data de nascimento");
-            System.out.println("5 - salário");
-
-
-            intOpcao = inputNumber.nextInt();
-
-        }
-
-        assert funcionarioPj != null;
+        int intOpcao = inputNumber.nextInt();
 
         switch (intOpcao) {
 
@@ -354,7 +300,7 @@ public class DataBase {
 
             case 3 -> {
 
-                cpf = inserirCpf();
+                Long cpf = inserirCpf();
 
                 funcionarioPj.setCpf(cpf);
 

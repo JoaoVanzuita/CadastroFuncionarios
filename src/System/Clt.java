@@ -8,6 +8,7 @@ public class Clt extends Funcionario {
         super(nome, sexo, cpf, dataNasc, salario);
         this.valeTransporte = valeTransporte;
         this.valeSaude = valeSaude;
+        this.setSalario(this.salario - (valeTransporte + valeSaude));
     }
 
 
@@ -27,8 +28,16 @@ public class Clt extends Funcionario {
         this.valeSaude = valeSaude;
     }
 
-    public double descontarBeneficios(double valeTransporte, double valeSaude){
-        return this.getSalario() - (valeTransporte + valeSaude);
+    @Override
+    public String toString() {
+        return "\nFuncionario CLT{" +
+                ", nome='" + nome + '\'' +
+                ", sexo=" + sexo +
+                ", cpf=" + cpf +
+                ", dataNasc='" + dataNasc + '\'' +
+                ", salario=" + salario +
+                " valeTransporte=" + valeTransporte +
+                ", valeSaude=" + valeSaude +
+                "}\n";
     }
-
 }

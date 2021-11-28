@@ -1,8 +1,6 @@
 package Util;
 
 import System.*;
-import com.sun.security.jgss.GSSUtil;
-
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -10,8 +8,6 @@ public class Menu {
 
     private final Scanner inputNumber = new Scanner(System.in).useLocale(Locale.forLanguageTag("pt-BR"));
     private final Scanner inputString = new Scanner(System.in).useLocale(Locale.forLanguageTag("pt-BR"));
-    int intOpcao;
-    private String stringOpcao;
     private final DataBase dataBase;
 
     public Menu(DataBase database) {
@@ -20,19 +16,15 @@ public class Menu {
 
     public void abrirMenu(){
 
-        System.out.println("Qual operação deseja fazer? (Digite o número correspondente)");
-
-        pularLinha();
+        System.out.println("Qual operação deseja fazer? (Digite o número correspondente)\n");
 
         System.out.println("1 - Cadastrar Funcionário\n");
         System.out.println("2 - Consultar cadastro de funcionário\n");
         System.out.println("3 - Editar cadastro de Funcionário\n");
         System.out.println("4 - Excluir funcionário\n");
-        System.out.println("5 - Encerrar sessão");
+        System.out.println("5 - Encerrar sessão\n");
 
-        pularLinha();
-
-        intOpcao = inputNumber.nextInt();
+        int intOpcao = inputNumber.nextInt();
 
         executarAcao(intOpcao);
 
@@ -46,16 +38,30 @@ public class Menu {
 
             case 2 -> consulta();
 
-            case 3 -> System.out.println("A implementar");//edicaoCadastro();
+            case 3 -> edicaoCadastro();
+
+            case 4 -> excluir();
+
+            case 5 ->{
+
+                System.out.println("Encerrando...\n");
+                System.exit(0);
+
+            }
+
+            default -> opcaoInvalida();
+
         }
+
+        abrirMenu();
 
     }
 
     private void cadastro() {
 
-        System.out.println("Deseja cadastrar um funcionário PJ ou CLT? (PJ/CLT/CANCEL)");
+        System.out.println("Deseja cadastrar um funcionário PJ ou CLT? (PJ/CLT/CANCEL)\n");
 
-        stringOpcao = inputString.nextLine().toUpperCase();
+        String stringOpcao = inputString.nextLine().toUpperCase();
 
         switch (stringOpcao){
 
@@ -71,7 +77,7 @@ public class Menu {
 
                 }else{
 
-                    System.out.println("Esse CPF já foi registrado.");
+                    System.out.println("Esse CPF já foi registrado.\n");
 
                     desejaAbrirMenu();
 
@@ -90,7 +96,7 @@ public class Menu {
 
                 }else{
 
-                    System.out.println("Esse CPF já foi registrado.");
+                    System.out.println("Esse CPF já foi registrado.\n");
 
                     desejaAbrirMenu();
 
@@ -108,14 +114,12 @@ public class Menu {
 
     private void consulta(){
 
-        System.out.println("Digite o CPF do registro que deseja consultar:");
-
-        Long cpf = inputNumber.nextLong();
+        Long cpf = dataBase.inserirCpf();
 
 
         if(!verificaCpf(cpf)){
 
-            System.out.println("Registro não encontrado.");
+            System.out.println("Registro não encontrado.\n");
 
             desejaAbrirMenu();
 
@@ -127,43 +131,60 @@ public class Menu {
 
     private void edicaoCadastro() {
 
-        System.out.println("Digite o cpf do registro que deseja editar:");
-
         Long cpf = dataBase.inserirCpf();
 
         if(!verificaCpf(cpf)){
 
-            System.out.println("Registro não encontrado");
+            System.out.println("Registro não encontrado.\n");
 
             desejaAbrirMenu();
 
         }
 
-        for (Funcionario funcionario: dataBase.retornarLista()) {
+        Funcionario funcionario = encontrarFuncionario(cpf);
 
+        if(funcionario instanceof Clt){
 
+            dataBase.editarClt((Clt) funcionario);
+
+        }else if(funcionario instanceof Pj){
+
+            dataBase.editarPj((Pj) funcionario);
 
         }
 
 
     }
 
-    public static void pularLinha(){
-        System.out.println();
+    private void excluir() {
+
+        Long cpf = dataBase.inserirCpf();
+
+        if(!verificaCpf(cpf)){
+
+            System.out.println("Registro não encontrado.\n");
+
+            desejaAbrirMenu();
+
+        }
+
+        Funcionario funcionario = encontrarFuncionario(cpf);
+
+        dataBase.excluirFuncionario(funcionario);
+
     }
 
     public void opcaoInvalida(){
 
-        System.out.println("Opção inválida. Deseja abrir o menu novamente? (S/N)");
-        String stringOpcao = inputString.next().toUpperCase();
+        String stringOpcao;
 
+        do {
 
-         while(!stringOpcao.equals("S") && !stringOpcao.equals("N")){
+            System.out.println("Opção inválida. Deseja abrir o menu novamente? (S/N)\n");
 
-             System.out.println("Opção inválida. Deseja abrir o menu novamente? (S/N)");
-             stringOpcao = inputString.next().toUpperCase();
+            stringOpcao = inputString.nextLine().toUpperCase();
 
-         }
+        }while(!stringOpcao.equals("S") && !stringOpcao.equals("N"));
 
         switch (stringOpcao) {
             case "S" -> abrirMenu();
@@ -174,8 +195,11 @@ public class Menu {
     }
 
     public void desejaAbrirMenu(){
-        System.out.println("Deseja abrir o menu novamente: (S/N)");
-        stringOpcao = inputString.next().toUpperCase();
+
+        System.out.println("Deseja abrir o menu novamente: (S/N)\n");
+
+        String stringOpcao = inputString.next().toUpperCase();
+
         switch (stringOpcao) {
 
             case "S" -> abrirMenu();
@@ -202,6 +226,22 @@ public class Menu {
         }
 
         return contemCpf;
+    }
+
+    public Funcionario encontrarFuncionario(Long cpf){
+
+        Funcionario funcionario = null;
+
+        for (Funcionario funcionario0: dataBase.retornarLista()) {
+
+            if(cpf.equals(funcionario0.getCpf())){
+
+                funcionario = funcionario0;
+
+            }
+        }
+
+        return funcionario;
     }
 
 }
