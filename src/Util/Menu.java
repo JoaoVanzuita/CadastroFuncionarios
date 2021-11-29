@@ -1,6 +1,7 @@
 package Util;
 
 import System.*;
+
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -14,7 +15,7 @@ public class Menu {
         this.dataBase = database;
     }
 
-    public void abrirMenu(){
+    public void abrirMenu() {
 
         System.out.println("Qual operação deseja fazer? (Digite o número correspondente)\n");
 
@@ -30,9 +31,9 @@ public class Menu {
 
     }
 
-    public void executarAcao(int opcao){
+    public void executarAcao(int opcao) {
 
-        switch(opcao){
+        switch (opcao) {
 
             case 1 -> cadastro();
 
@@ -42,7 +43,7 @@ public class Menu {
 
             case 4 -> excluir();
 
-            case 5 ->{
+            case 5 -> {
 
                 System.out.println("Encerrando...\n");
                 System.exit(0);
@@ -63,19 +64,19 @@ public class Menu {
 
         String stringOpcao = inputString.nextLine().toUpperCase();
 
-        switch (stringOpcao){
+        switch (stringOpcao) {
 
-            case "PJ"->{
+            case "PJ" -> {
 
                 Pj funcionarioPj = dataBase.cadastrarPj();
 
                 boolean contemCpf = verificaCpf(funcionarioPj.getCpf());
 
-                if(!contemCpf) {
+                if (!contemCpf) {
 
                     dataBase.cadastrar(funcionarioPj);
 
-                }else{
+                } else {
 
                     System.out.println("Esse CPF já foi registrado.\n");
 
@@ -84,17 +85,17 @@ public class Menu {
                 }
             }
 
-            case "CLT" ->{
+            case "CLT" -> {
 
                 Clt funcionarioClt = dataBase.cadastrarClt();
 
                 boolean contemCpf = verificaCpf(funcionarioClt.getCpf());
 
-                if(!contemCpf) {
+                if (!contemCpf) {
 
                     dataBase.cadastrar(funcionarioClt);
 
-                }else{
+                } else {
 
                     System.out.println("Esse CPF já foi registrado.\n");
 
@@ -112,12 +113,12 @@ public class Menu {
 
     }
 
-    private void consulta(){
+    private void consulta() {
 
         Long cpf = dataBase.inserirCpf();
 
 
-        if(!verificaCpf(cpf)){
+        if (!verificaCpf(cpf)) {
 
             System.out.println("Registro não encontrado.\n");
 
@@ -125,7 +126,7 @@ public class Menu {
 
         }
 
-            dataBase.consultarFuncionario(cpf);
+        dataBase.consultarFuncionario(cpf);
 
     }
 
@@ -133,7 +134,7 @@ public class Menu {
 
         Long cpf = dataBase.inserirCpf();
 
-        if(!verificaCpf(cpf)){
+        if (!verificaCpf(cpf)) {
 
             System.out.println("Registro não encontrado.\n");
 
@@ -143,11 +144,11 @@ public class Menu {
 
         Funcionario funcionario = encontrarFuncionario(cpf);
 
-        if(funcionario instanceof Clt){
+        if (funcionario instanceof Clt) {
 
             dataBase.editarClt((Clt) funcionario);
 
-        }else if(funcionario instanceof Pj){
+        } else if (funcionario instanceof Pj) {
 
             dataBase.editarPj((Pj) funcionario);
 
@@ -160,7 +161,7 @@ public class Menu {
 
         Long cpf = dataBase.inserirCpf();
 
-        if(!verificaCpf(cpf)){
+        if (!verificaCpf(cpf)) {
 
             System.out.println("Registro não encontrado.\n");
 
@@ -174,7 +175,7 @@ public class Menu {
 
     }
 
-    public void opcaoInvalida(){
+    public void opcaoInvalida() {
 
         String stringOpcao;
 
@@ -184,7 +185,7 @@ public class Menu {
 
             stringOpcao = inputString.nextLine().toUpperCase();
 
-        }while(!stringOpcao.equals("S") && !stringOpcao.equals("N"));
+        } while (!stringOpcao.equals("S") && !stringOpcao.equals("N"));
 
         switch (stringOpcao) {
             case "S" -> abrirMenu();
@@ -194,7 +195,7 @@ public class Menu {
         }
     }
 
-    public void desejaAbrirMenu(){
+    public void desejaAbrirMenu() {
 
         System.out.println("Deseja abrir o menu novamente: (S/N)\n");
 
@@ -210,11 +211,11 @@ public class Menu {
         }
     }
 
-    public boolean verificaCpf(Long cpf){
+    public boolean verificaCpf(Long cpf) {
 
         boolean contemCpf = false;
 
-        for (Funcionario funcionario: dataBase.retornarLista()) {
+        for (Funcionario funcionario : dataBase.retornarLista()) {
 
             if (cpf.equals(funcionario.getCpf())) {
 
@@ -228,13 +229,13 @@ public class Menu {
         return contemCpf;
     }
 
-    public Funcionario encontrarFuncionario(Long cpf){
+    public Funcionario encontrarFuncionario(Long cpf) {
 
         Funcionario funcionario = null;
 
-        for (Funcionario funcionario0: dataBase.retornarLista()) {
+        for (Funcionario funcionario0 : dataBase.retornarLista()) {
 
-            if(cpf.equals(funcionario0.getCpf())){
+            if (cpf.equals(funcionario0.getCpf())) {
 
                 funcionario = funcionario0;
 

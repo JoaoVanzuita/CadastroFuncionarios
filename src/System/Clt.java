@@ -11,18 +11,10 @@ public class Clt extends Funcionario {
         this.setSalario(this.salario - (valeTransporte + valeSaude));
     }
 
-
-    public double getValeTransporte() {
-        return valeTransporte;
-    }
-
     public void setValeTransporte(double valeTransporte) {
         this.valeTransporte = valeTransporte;
     }
 
-    public double getValeSaude() {
-        return valeSaude;
-    }
 
     public void setValeSaude(double valeSaude) {
         this.valeSaude = valeSaude;

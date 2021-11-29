@@ -26,10 +26,6 @@ public abstract class Funcionario {
         this.nome = nome;
     }
 
-    public char getSexo() {
-        return sexo;
-    }
-
     public void setSexo(char sexo) {
         this.sexo = sexo;
     }
@@ -40,10 +36,6 @@ public abstract class Funcionario {
 
     public void setCpf(Long cpf) {
         this.cpf = cpf;
-    }
-
-    public String getDataNasc() {
-        return dataNasc;
     }
 
     public void setDataNasc(String dataNasc) {

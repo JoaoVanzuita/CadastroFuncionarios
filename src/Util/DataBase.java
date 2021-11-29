@@ -19,7 +19,7 @@ public class DataBase {
     public void cadastrar(Funcionario funcionario) {
         listaFuncionarios.add(funcionario);
 
-        System.out.println("Funcionário " + funcionario.getNome() + " cadastrado com sucesso." );
+        System.out.println("Funcionário " + funcionario.getNome() + " cadastrado com sucesso.");
     }
 
     public Collection<Funcionario> retornarLista() {
@@ -119,8 +119,8 @@ public class DataBase {
         String nome = inserirNome();
 
         String stringSexo = inserirSexo();
-            //converter sexo de String para char
-            char sexo = stringSexo.charAt(0);
+        //converter sexo de String para char
+        char sexo = stringSexo.charAt(0);
 
         Long cpf = inserirCpf();
 
@@ -140,8 +140,8 @@ public class DataBase {
         String nome = inserirNome();
 
         String stringSexo = inserirSexo();
-            //converter sexo de String para char
-            char sexo = stringSexo.charAt(0);
+        //converter sexo de String para char
+        char sexo = stringSexo.charAt(0);
 
         Long cpf = inserirCpf();
 
@@ -158,15 +158,15 @@ public class DataBase {
 
             if (cpf.equals(funcionario0.getCpf())) {
 
-                if(funcionario0 instanceof Pj){
+                if (funcionario0 instanceof Pj) {
 
-                    Pj funcionario = (Pj)funcionario0;
+                    Pj funcionario = (Pj) funcionario0;
 
                     System.out.println(funcionario);
 
-                }else if(funcionario0 instanceof Clt){
+                } else if (funcionario0 instanceof Clt) {
 
-                    Clt funcionario = (Clt)funcionario0;
+                    Clt funcionario = (Clt) funcionario0;
 
                     System.out.println(funcionario);
 
@@ -187,18 +187,18 @@ public class DataBase {
 
     public void editarClt(Clt funcionarioClt) {
 
-            System.out.println("Digite a opção correspondente ao dado que deseja atualizar do funcionário " + funcionarioClt.getNome());
-            System.out.println("1 - nome");
-            System.out.println("2 - sexo");
-            System.out.println("3 - cpf");
-            System.out.println("4 - data de nascimento");
-            System.out.println("5 - salário");
-            System.out.println("6 - vale transporte");
-            System.out.println("7 - vale saúde");
+        System.out.println("Digite a opção correspondente ao dado que deseja atualizar do funcionário " + funcionarioClt.getNome());
+        System.out.println("1 - nome");
+        System.out.println("2 - sexo");
+        System.out.println("3 - cpf");
+        System.out.println("4 - data de nascimento");
+        System.out.println("5 - salário");
+        System.out.println("6 - vale transporte");
+        System.out.println("7 - vale saúde");
 
-            int intOpcao = inputNumber.nextInt();
+        int intOpcao = inputNumber.nextInt();
 
-            switch (intOpcao) {
+        switch (intOpcao) {
 
             case 1 -> {
 
@@ -211,8 +211,8 @@ public class DataBase {
             case 2 -> {
 
                 String stringSexo = inserirSexo();
-                    //converter sexo de String para char
-                    char sexo = stringSexo.charAt(0);
+                //converter sexo de String para char
+                char sexo = stringSexo.charAt(0);
 
                 funcionarioClt.setSexo(sexo);
 
@@ -290,8 +290,8 @@ public class DataBase {
             case 2 -> {
 
                 String stringSexo = inserirSexo();
-                    //converter sexo de String para char
-                    char sexo = stringSexo.charAt(0);
+                //converter sexo de String para char
+                char sexo = stringSexo.charAt(0);
 
                 funcionarioPj.setSexo(sexo);
 
