@@ -37,11 +37,11 @@ public class DataBase {
 
     public String inserirSexo() {
         System.out.println("Insira o sexo do funcionário (M/F):");
-        String sexo = inputString.next().toUpperCase();
+        String sexo = inputString.next();
 
-        while (!sexo.equals("M") && !sexo.equals("F")) {
+        while (!sexo.equalsIgnoreCase("M") && !sexo.equalsIgnoreCase("F")) {
             System.out.println("Pof favor, insira uma das opções solicitadas.");
-            sexo = inputString.next().toUpperCase();
+            sexo = inputString.next();
         }
 
         return sexo;
@@ -119,8 +119,8 @@ public class DataBase {
         String nome = inserirNome();
 
         String stringSexo = inserirSexo();
-        //converter sexo de String para char
-        char sexo = stringSexo.charAt(0);
+            //converter sexo de String para char
+            char sexo = stringSexo.charAt(0);
 
         Long cpf = inserirCpf();
 
@@ -140,8 +140,8 @@ public class DataBase {
         String nome = inserirNome();
 
         String stringSexo = inserirSexo();
-        //converter sexo de String para char
-        char sexo = stringSexo.charAt(0);
+            //converter sexo de String para char
+            char sexo = stringSexo.charAt(0);
 
         Long cpf = inserirCpf();
 
@@ -211,8 +211,8 @@ public class DataBase {
             case 2 -> {
 
                 String stringSexo = inserirSexo();
-                //converter sexo de String para char
-                char sexo = stringSexo.charAt(0);
+                    //converter sexo de String para char
+                    char sexo = stringSexo.charAt(0);
 
                 funcionarioClt.setSexo(sexo);
 
@@ -290,8 +290,8 @@ public class DataBase {
             case 2 -> {
 
                 String stringSexo = inserirSexo();
-                //converter sexo de String para char
-                char sexo = stringSexo.charAt(0);
+                    //converter sexo de String para char
+                    char sexo = stringSexo.charAt(0);
 
                 funcionarioPj.setSexo(sexo);
 

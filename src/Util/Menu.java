@@ -62,9 +62,9 @@ public class Menu {
 
         System.out.println("Deseja cadastrar um funcionário PJ ou CLT? (PJ/CLT/CANCEL)\n");
 
-        String stringOpcao = inputString.nextLine().toUpperCase();
+        String stringOpcao = inputString.nextLine();
 
-        switch (stringOpcao) {
+        switch (stringOpcao.toUpperCase()) {
 
             case "PJ" -> {
 
@@ -183,9 +183,9 @@ public class Menu {
 
             System.out.println("Opção inválida. Deseja abrir o menu novamente? (S/N)\n");
 
-            stringOpcao = inputString.nextLine().toUpperCase();
+            stringOpcao = inputString.nextLine();
 
-        } while (!stringOpcao.equals("S") && !stringOpcao.equals("N"));
+        } while (!stringOpcao.equalsIgnoreCase("S") && !stringOpcao.equalsIgnoreCase("N"));
 
         switch (stringOpcao) {
             case "S" -> abrirMenu();
@@ -199,9 +199,9 @@ public class Menu {
 
         System.out.println("Deseja abrir o menu novamente: (S/N)\n");
 
-        String stringOpcao = inputString.next().toUpperCase();
+        String stringOpcao = inputString.next();
 
-        switch (stringOpcao) {
+        switch (stringOpcao.toUpperCase()) {
 
             case "S" -> abrirMenu();
 
