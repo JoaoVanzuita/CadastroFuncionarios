@@ -1,4 +1,4 @@
-package System;
+package system;
 
 public class Pj extends Funcionario {
     public Pj(String nome, char sexo, long cpf, String dataNasc, double salario) {

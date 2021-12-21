@@ -1,7 +1,7 @@
-package System;
+package system;
 
-import Util.DataBase;
-import Util.Menu;
+import util.DataBase;
+import util.Menu;
 
 public class Main {
 

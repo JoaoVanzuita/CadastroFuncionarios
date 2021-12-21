@@ -1,14 +1,17 @@
-package Util;
+package util;
 
-import System.*;
+import system.*;
 
 import java.util.Locale;
+import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class Menu {
 
-    private final Scanner inputNumber = new Scanner(System.in).useLocale(Locale.forLanguageTag("pt-BR"));
-    private final Scanner inputString = new Scanner(System.in).useLocale(Locale.forLanguageTag("pt-BR"));
+    private Locale locale = new Locale("en","US");
+    private ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
+    private final Scanner inputNumber = new Scanner(System.in).useLocale(locale);
+    private final Scanner inputString = new Scanner(System.in).useLocale(locale);
     private final DataBase dataBase;
 
     public Menu(DataBase database) {
@@ -17,15 +20,17 @@ public class Menu {
 
     public void abrirMenu() {
 
-        System.out.println("Qual operação deseja fazer? (Digite o número correspondente)\n");
+        System.out.println(bundle.getString("qualOperacao"));
 
-        System.out.println("1 - Cadastrar Funcionário\n");
-        System.out.println("2 - Consultar cadastro de funcionário\n");
-        System.out.println("3 - Editar cadastro de Funcionário\n");
-        System.out.println("4 - Excluir funcionário\n");
-        System.out.println("5 - Encerrar sessão\n");
+        System.out.println(bundle.getString("cadastrar"));
+        System.out.println(bundle.getString("consultar"));
+        System.out.println(bundle.getString("editar"));
+        System.out.println(bundle.getString("excluir"));
+        System.out.println(bundle.getString("encerrar") + "\n");
 
         int intOpcao = inputNumber.nextInt();
+
+        //TODO: adicionar try catch
 
         executarAcao(intOpcao);
 
@@ -45,7 +50,7 @@ public class Menu {
 
             case 5 -> {
 
-                System.out.println("Encerrando...\n");
+                System.out.println(bundle.getString("encerrando"));
                 System.exit(0);
 
             }
@@ -60,7 +65,7 @@ public class Menu {
 
     private void cadastro() {
 
-        System.out.println("Deseja cadastrar um funcionário PJ ou CLT? (PJ/CLT/CANCEL)\n");
+        System.out.println(bundle.getString("pjOuClt"));
 
         String stringOpcao = inputString.nextLine();
 
@@ -78,7 +83,7 @@ public class Menu {
 
                 } else {
 
-                    System.out.println("Esse CPF já foi registrado.\n");
+                    System.out.println(bundle.getString("cpfJaRegistrado"));
 
                     desejaAbrirMenu();
 
@@ -97,7 +102,7 @@ public class Menu {
 
                 } else {
 
-                    System.out.println("Esse CPF já foi registrado.\n");
+                    System.out.println(bundle.getString("cpfJaRegistrado"));
 
                     desejaAbrirMenu();
 
@@ -120,7 +125,7 @@ public class Menu {
 
         if (!verificaCpf(cpf)) {
 
-            System.out.println("Registro não encontrado.\n");
+            System.out.println(bundle.getString("semRegistro"));
 
             desejaAbrirMenu();
 
@@ -136,7 +141,7 @@ public class Menu {
 
         if (!verificaCpf(cpf)) {
 
-            System.out.println("Registro não encontrado.\n");
+            System.out.println(bundle.getString("semRegistro"));
 
             desejaAbrirMenu();
 
@@ -163,7 +168,7 @@ public class Menu {
 
         if (!verificaCpf(cpf)) {
 
-            System.out.println("Registro não encontrado.\n");
+            System.out.println(bundle.getString("semRegistro"));
 
             desejaAbrirMenu();
 
@@ -181,7 +186,7 @@ public class Menu {
 
         do {
 
-            System.out.println("Opção inválida. Deseja abrir o menu novamente? (S/N)\n");
+            System.out.println(bundle.getString("opcaoInvalida"));
 
             stringOpcao = inputString.nextLine();
 
@@ -197,7 +202,7 @@ public class Menu {
 
     public void desejaAbrirMenu() {
 
-        System.out.println("Deseja abrir o menu novamente: (S/N)\n");
+        System.out.println(bundle.getString("desejaAbrirMenu"));
 
         String stringOpcao = inputString.next();
 

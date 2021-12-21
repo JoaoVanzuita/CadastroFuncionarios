@@ -1,4 +1,4 @@
-package System;
+package system;
 
 public class Clt extends Funcionario {
 

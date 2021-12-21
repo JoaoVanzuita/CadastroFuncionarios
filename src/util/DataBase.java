@@ -1,25 +1,24 @@
-package Util;
+package util;
 
-import System.Clt;
-import System.Funcionario;
-import System.Pj;
+import system.Clt;
+import system.Funcionario;
+import system.Pj;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 public class DataBase {
 
-    private final Scanner inputNumber = new Scanner(System.in).useLocale(Locale.forLanguageTag("pt-BR"));
-    private final Scanner inputString = new Scanner(System.in).useLocale(Locale.forLanguageTag("pt-BR"));
+    private Locale locale = Locale.getDefault();
+    private ResourceBundle bundle = ResourceBundle.getBundle("messages", Locale.ENGLISH);
+    private final Scanner inputNumber = new Scanner(System.in).useLocale(locale);
+    private final Scanner inputString = new Scanner(System.in).useLocale(locale);
     private final Collection<Funcionario> listaFuncionarios = new HashSet<>();
 
 
     public void cadastrar(Funcionario funcionario) {
         listaFuncionarios.add(funcionario);
 
-        System.out.println("Funcionário " + funcionario.getNome() + " cadastrado com sucesso.");
+        System.out.println(bundle.getString("funcionario") + funcionario.getNome() + bundle.getString("cadastrado"));
     }
 
     public Collection<Funcionario> retornarLista() {
@@ -28,7 +27,7 @@ public class DataBase {
 
 
     public String inserirNome() {
-        System.out.println("Insira o nome do funcionário:");
+        System.out.println(bundle.getString("inserirNome"));
 
         String nome = inputString.nextLine();
 
@@ -36,11 +35,11 @@ public class DataBase {
     }
 
     public String inserirSexo() {
-        System.out.println("Insira o sexo do funcionário (M/F):");
+        System.out.println(bundle.getString("inserirSexo"));
         String sexo = inputString.next();
 
         while (!sexo.equalsIgnoreCase("M") && !sexo.equalsIgnoreCase("F")) {
-            System.out.println("Pof favor, insira uma das opções solicitadas.");
+            System.out.println(bundle.getString("sexoInvalido"));
             sexo = inputString.next();
         }
 
@@ -49,11 +48,13 @@ public class DataBase {
 
     public Long inserirCpf() {
 
-        System.out.println("Insira o CPF do funcionário:");
+        //TODO: adicionar try catch
+
+        System.out.println(bundle.getString("inserirCpf"));
         Long cpf = inputNumber.nextLong();
 
         while (cpf.toString().length() != 11) {
-            System.out.println("Por favor, insira um CPF válido.");
+            System.out.println(bundle.getString("cpfInvalido"));
             cpf = inputNumber.nextLong();
         }
 
@@ -62,11 +63,11 @@ public class DataBase {
 
     public String inserirDataNasc() {
 
-        System.out.println("Insira a data de nascimento do funcionário: (DD/MM/AAA)");
+        System.out.println(bundle.getString("inserirData"));
         String dataNasc = inputString.next();
 
         while (dataNasc.charAt(2) != '/' || dataNasc.charAt(5) != '/' || dataNasc.length() != 10) {
-            System.out.println("Por favor, insira a data de nascimento no formato solicitado.");
+            System.out.println(bundle.getString("dataInvalida"));
             dataNasc = inputString.next();
         }
 
@@ -75,11 +76,13 @@ public class DataBase {
 
     public double inserirSalario() {
 
-        System.out.println("Insira o salário do funcionário: (Utilizando ',')");
+        //TODO: adicionar try catch
+
+        System.out.println(bundle.getString("inserirSalario"));
         double salario = inputNumber.nextDouble();
 
         while (salario < 1192.40) {
-            System.out.println("O valor inserido é menor que o valor do salário mínimo.");
+            System.out.println(bundle.getString("salarioInvalido"));
             salario = inputNumber.nextDouble();
         }
 
@@ -88,12 +91,14 @@ public class DataBase {
 
     public double inserirValeTransporte(double salario) {
 
-        System.out.println("Insira o valor do vale transporte do funcionário:");
+        //TODO: adicionar try catch
+
+        System.out.println(bundle.getString("inserirValeTransporte"));
         double valeTransporte = inputNumber.nextDouble();
 
         while (valeTransporte > salario * 0.2 || valeTransporte < salario * 0.1) {
-            System.out.println("O valor do vale transporte não pode ser inferior a 10% ou superior a 20% do salário do funcionário\n" +
-                    "Valor do salário: " + salario + "\n 10%: " + salario * 0.1 + "\n 20%: " + salario * 0.2);
+            System.out.println(bundle.getString("valeTransporteInvalido") +
+                    bundle.getString("valorSalario") + salario + "\n 10%: " + salario * 0.1 + "\n 20%: " + salario * 0.2);
             valeTransporte = inputNumber.nextDouble();
         }
 
@@ -102,12 +107,14 @@ public class DataBase {
 
     public double inserirValeSaude(double salario) {
 
-        System.out.println("Insira o valor do vale saúde do funcionário:");
+        //TODO: adicionar try catch
+
+        System.out.println(bundle.getString("inserirValeSaude"));
         double valeSaude = inputNumber.nextDouble();
 
         while (valeSaude > salario * 0.25 || valeSaude < salario * 0.15) {
-            System.out.println("O valor do vale saúde não pode ser inferior a 15% ou superior a 25% do salário do funcionário\n" +
-                    "Valor do salário: " + salario + "\n 15%: " + salario * 0.15 + "\n 25%: " + salario * 0.25);
+            System.out.println(bundle.getString("valeSaudeInvalido") +
+                    bundle.getString("valorSalario") + salario + "\n 15%: " + salario * 0.15 + "\n 25%: " + salario * 0.25);
             valeSaude = inputNumber.nextDouble();
         }
 
@@ -181,22 +188,24 @@ public class DataBase {
 
         listaFuncionarios.remove(funcionario);
 
-        System.out.println("Registro " + funcionario.getNome() + " excluído com sucesso.");
+        System.out.println(bundle.getString("registro") + funcionario.getNome() + bundle.getString("excluir"));
 
     }
 
     public void editarClt(Clt funcionarioClt) {
 
-        System.out.println("Digite a opção correspondente ao dado que deseja atualizar do funcionário " + funcionarioClt.getNome());
-        System.out.println("1 - nome");
-        System.out.println("2 - sexo");
-        System.out.println("3 - cpf");
-        System.out.println("4 - data de nascimento");
-        System.out.println("5 - salário");
-        System.out.println("6 - vale transporte");
-        System.out.println("7 - vale saúde");
+        System.out.println(bundle.getString("digiteOpcao") + funcionarioClt.getNome());
+        System.out.println(bundle.getString("nome"));
+        System.out.println(bundle.getString("sexo"));
+        System.out.println(bundle.getString("cpf"));
+        System.out.println(bundle.getString("dataNasc"));
+        System.out.println(bundle.getString("salario"));
+        System.out.println(bundle.getString("valeTransporte"));
+        System.out.println(bundle.getString("valeSaude"));
 
         int intOpcao = inputNumber.nextInt();
+
+        //TODO: adicionar try catch
 
         switch (intOpcao) {
 
@@ -260,19 +269,20 @@ public class DataBase {
 
         }
 
-        System.out.println("Registro " + funcionarioClt.getNome() + " atualizado com sucesso.");
+        System.out.println(bundle.getString("registro") + funcionarioClt.getNome() + bundle.getString("atualizado"));
 
     }
 
     public void editarPj(Pj funcionarioPj) {
 
-        System.out.println("Digite a opção correspondente ao dado que deseja atualizar do funcionário " + funcionarioPj.getNome() + "\n");
-        System.out.println("1 - nome\n");
-        System.out.println("2 - sexo\n");
-        System.out.println("3 - cpf\n");
-        System.out.println("4 - data de nascimento\n");
-        System.out.println("5 - salário\n");
+        System.out.println(bundle.getString("digiteOpcao") + funcionarioPj.getNome());
+        System.out.println(bundle.getString("nome"));
+        System.out.println(bundle.getString("sexo"));
+        System.out.println(bundle.getString("cpf"));
+        System.out.println(bundle.getString("dataNasc"));
+        System.out.println(bundle.getString("salario"));
 
+        //TODO: adicionar try catch
 
         int intOpcao = inputNumber.nextInt();
 
@@ -326,7 +336,7 @@ public class DataBase {
             }
         }
 
-        System.out.println("Registro " + funcionarioPj.getNome() + " atualizado com sucesso.");
+        System.out.println(bundle.getString("registro") + funcionarioPj.getNome() + bundle.getString("atualizado"));
 
     }
 }
