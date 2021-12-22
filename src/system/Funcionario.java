@@ -1,5 +1,6 @@
 package system;
 
+import java.util.Date;
 import java.util.Objects;
 
 public abstract class Funcionario {
@@ -7,10 +8,10 @@ public abstract class Funcionario {
     protected String nome;
     protected char sexo;
     protected Long cpf;
-    protected String dataNasc;
+    protected Date dataNasc;
     protected double salario;
 
-    public Funcionario(String nome, char sexo, Long cpf, String dataNasc, double salario) {
+    public Funcionario(String nome, char sexo, Long cpf, Date dataNasc, double salario) {
         this.nome = nome;
         this.sexo = sexo;
         this.cpf = cpf;
@@ -38,7 +39,7 @@ public abstract class Funcionario {
         this.cpf = cpf;
     }
 
-    public void setDataNasc(String dataNasc) {
+    public void setDataNasc(Date dataNasc) {
         this.dataNasc = dataNasc;
     }
 

@@ -4,6 +4,8 @@ import system.Clt;
 import system.Funcionario;
 import system.Pj;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class DataBase {
@@ -61,7 +63,7 @@ public class DataBase {
         return cpf;
     }
 
-    public String inserirDataNasc() {
+    public Date inserirDataNasc() throws ParseException {
 
         System.out.println(bundle.getString("inserirData"));
         String dataNasc = inputString.next();
@@ -71,7 +73,10 @@ public class DataBase {
             dataNasc = inputString.next();
         }
 
-        return dataNasc;
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/uuuu");
+        formato.setLenient (false);
+
+        return formato.parse(dataNasc);
     }
 
     public double inserirSalario() {
@@ -131,7 +136,20 @@ public class DataBase {
 
         Long cpf = inserirCpf();
 
-        String dataNasc = inserirDataNasc();
+        Date dataNasc = null;
+
+        try {
+
+            dataNasc = inserirDataNasc();
+
+        } catch (ParseException e) {
+
+            //e.printStackTrace();
+            System.out.println(bundle.getString("ocorreuErro"));
+
+            cadastrarClt();
+
+        }
 
         double salario = inserirSalario();
 
@@ -152,7 +170,21 @@ public class DataBase {
 
         Long cpf = inserirCpf();
 
-        String dataNasc = inserirDataNasc();
+        Date dataNasc = null;
+
+        try {
+
+            dataNasc = inserirDataNasc();
+
+        } catch (ParseException e) {
+
+            //e.printStackTrace();
+
+            System.out.println(bundle.getString("ocorreuErro"));
+
+            cadastrarPj();
+
+        }
 
         double salario = inserirSalario();
 
@@ -237,7 +269,20 @@ public class DataBase {
 
             case 4 -> {
 
-                String dataNasc = inserirDataNasc();
+                Date dataNasc = null;
+
+                try {
+
+                    dataNasc = inserirDataNasc();
+
+                } catch (ParseException e) {
+
+                    //e.printStackTrace();
+
+                    System.out.println(bundle.getString("ocorreuErro"));
+
+                    editarClt(funcionarioClt);
+                }
 
                 funcionarioClt.setDataNasc(dataNasc);
 
@@ -319,7 +364,21 @@ public class DataBase {
 
             case 4 -> {
 
-                String dataNasc = inserirDataNasc();
+                Date dataNasc = null;
+
+                try {
+
+                    dataNasc = inserirDataNasc();
+
+                } catch (ParseException e) {
+
+                    //e.printStackTrace();
+
+                    System.out.println(bundle.getString("ocorreuErro"));
+
+                    editarPj(funcionarioPj);
+
+                }
 
                 funcionarioPj.setDataNasc(dataNasc);
 

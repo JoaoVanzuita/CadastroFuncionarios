@@ -1,10 +1,12 @@
 package system;
 
+import java.util.Date;
+
 public class Clt extends Funcionario {
 
     private double valeTransporte, valeSaude;
 
-    public Clt(String nome, char sexo, Long cpf, String dataNasc, double salario, double valeTransporte, double valeSaude) {
+    public Clt(String nome, char sexo, Long cpf, Date dataNasc, double salario, double valeTransporte, double valeSaude) {
         super(nome, sexo, cpf, dataNasc, salario);
         this.valeTransporte = valeTransporte;
         this.valeSaude = valeSaude;
