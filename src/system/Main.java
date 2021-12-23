@@ -19,8 +19,8 @@ public class Main {
         dataBase.cadastrar(pj);
          */
 
+        //menu.alterarIdioma();
         menu.abrirMenu();
-
 
     }
 }

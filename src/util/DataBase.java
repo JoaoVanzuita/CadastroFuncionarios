@@ -10,11 +10,11 @@ import java.util.*;
 
 public class DataBase {
 
-    private final Locale locale = Locale.getDefault();
-    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
+    private Locale locale = Locale.getDefault();
+    private ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
     private final Scanner inputNumber = new Scanner(System.in).useLocale(locale);
     private final Scanner inputString = new Scanner(System.in).useLocale(locale);
-    private final Collection<Funcionario> listaFuncionarios = new HashSet<>();
+    private final ArrayList<Funcionario> listaFuncionarios = new ArrayList<>();
 
 
     public void cadastrar(Funcionario funcionario) {
@@ -23,10 +23,9 @@ public class DataBase {
         System.out.println(bundle.getString("funcionario") + funcionario.getNome() + bundle.getString("cadastrado"));
     }
 
-    public Collection<Funcionario> retornarLista() {
+    public ArrayList<Funcionario> retornarLista() {
         return this.listaFuncionarios;
     }
-
 
     public String inserirNome() {
         System.out.println(bundle.getString("inserirNome"));
@@ -50,8 +49,18 @@ public class DataBase {
 
         //TODO: adicionar try catch
 
-        System.out.println(bundle.getString("inserirCpf"));
-        long cpf = inputNumber.nextLong();
+        long cpf = 0;
+
+        try {
+
+            System.out.println(bundle.getString("inserirCpf"));
+            cpf = inputNumber.nextLong();
+
+        }catch (InputMismatchException e) {
+
+            //e.printStackTrace();
+
+        }
 
         while (Long.toString(cpf).length() != 11) {
             System.out.println(bundle.getString("cpfInvalido"));
@@ -79,14 +88,18 @@ public class DataBase {
 
     public double inserirSalario() {
 
-        //TODO: adicionar try catch
+
+        double salario;
 
         System.out.println(bundle.getString("inserirSalario"));
-        double salario = inputNumber.nextDouble();
+
+        salario = inputNumber.nextDouble();
+
 
         while (salario < 1192.40) {
             System.out.println(bundle.getString("salarioInvalido"));
             salario = inputNumber.nextDouble();
+
         }
 
         return salario;
@@ -143,7 +156,7 @@ public class DataBase {
         } catch (ParseException e) {
 
             //e.printStackTrace();
-            System.out.println(bundle.getString("ocorreuErro"));
+            System.out.println(bundle.getString("ocorreuErro") + " (ParseException)");
 
             cadastrarClt();
 
@@ -178,7 +191,7 @@ public class DataBase {
 
             //e.printStackTrace();
 
-            System.out.println(bundle.getString("ocorreuErro"));
+            System.out.println(bundle.getString("ocorreuErro") + " (ParseException)");
 
             cadastrarPj();
 
@@ -214,7 +227,7 @@ public class DataBase {
 
         listaFuncionarios.remove(funcionario);
 
-        System.out.println(bundle.getString("registro") + funcionario.getNome() + bundle.getString("excluir"));
+        System.out.println(bundle.getString("registro") + funcionario.getNome() + bundle.getString("excluido"));
 
     }
 
@@ -368,7 +381,7 @@ public class DataBase {
 
                     //e.printStackTrace();
 
-                    System.out.println(bundle.getString("ocorreuErro"));
+                    System.out.println(bundle.getString("ocorreuErro") + " (ParseException)");
 
                     editarPj(funcionarioPj);
 
@@ -391,5 +404,17 @@ public class DataBase {
 
         System.out.println(bundle.getString("registro") + funcionarioPj.getNome() + bundle.getString("atualizado"));
 
+    }
+
+    public void setLocale(Locale locale) {
+        this.locale = locale;
+    }
+
+    public void setBundle(ResourceBundle bundle) {
+        this.bundle = bundle;
+    }
+
+    public Locale getLocale() {
+        return locale;
     }
 }

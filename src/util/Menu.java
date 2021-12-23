@@ -9,8 +9,8 @@ import java.util.Scanner;
 
 public class Menu {
 
-    private final Locale locale = Locale.getDefault();
-    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
+    private Locale locale = Locale.getDefault();
+    private ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
     private final Scanner inputNumber = new Scanner(System.in).useLocale(locale);
     private final Scanner inputString = new Scanner(System.in).useLocale(locale);
     private final DataBase dataBase;
@@ -26,6 +26,7 @@ public class Menu {
         System.out.println(bundle.getString("consultar"));
         System.out.println(bundle.getString("editar"));
         System.out.println(bundle.getString("excluir"));
+        System.out.println(bundle.getString("alterarIdioma"));
         System.out.println(bundle.getString("encerrar") + "\n");
 
         try {
@@ -55,13 +56,47 @@ public class Menu {
 
             case 4 -> excluir();
 
-            case 5 -> encerrar();
+            case 5 -> alterarIdioma();
+
+            case 6 -> encerrar();
 
             default -> opcaoInvalida();
 
         }
 
         abrirMenu();
+
+    }
+
+    public void alterarIdioma() {
+
+        if(dataBase.getLocale().getDisplayLanguage().equalsIgnoreCase("Português")){
+
+            Locale locale1 = new Locale("en","US");
+            ResourceBundle bundle1 = ResourceBundle.getBundle("messages", locale1);
+            dataBase.setBundle(bundle1);
+            dataBase.setLocale(locale1);
+
+        }else if(dataBase.getLocale().getDisplayLanguage().equalsIgnoreCase("Inglês")){
+
+            Locale locale1 = new Locale("pt","BR");
+            ResourceBundle bundle1 = ResourceBundle.getBundle("messages", locale1);
+            dataBase.setBundle(bundle1);
+            dataBase.setLocale(locale1);
+
+        }
+
+        if(locale.getDisplayLanguage().equalsIgnoreCase("Português")){
+
+            this.locale = new Locale("en", "US");
+            this.bundle = ResourceBundle.getBundle("messages", locale);
+
+        }else if(locale.getDisplayLanguage().equalsIgnoreCase("Inglês")){
+
+            this.locale = new Locale("pt", "BR");
+            this.bundle = ResourceBundle.getBundle("messages", locale);
+
+        }
 
     }
 
@@ -177,6 +212,7 @@ public class Menu {
         Funcionario funcionario = encontrarFuncionario(cpf);
 
         dataBase.excluirFuncionario(funcionario);
+        System.out.println();
 
     }
 
