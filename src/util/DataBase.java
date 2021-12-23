@@ -10,8 +10,8 @@ import java.util.*;
 
 public class DataBase {
 
-    private Locale locale = Locale.getDefault();
-    private ResourceBundle bundle = ResourceBundle.getBundle("messages", Locale.ENGLISH);
+    private final Locale locale = Locale.getDefault();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
     private final Scanner inputNumber = new Scanner(System.in).useLocale(locale);
     private final Scanner inputString = new Scanner(System.in).useLocale(locale);
     private final Collection<Funcionario> listaFuncionarios = new HashSet<>();
@@ -31,9 +31,7 @@ public class DataBase {
     public String inserirNome() {
         System.out.println(bundle.getString("inserirNome"));
 
-        String nome = inputString.nextLine();
-
-        return nome;
+        return inputString.nextLine();
     }
 
     public String inserirSexo() {
@@ -53,9 +51,9 @@ public class DataBase {
         //TODO: adicionar try catch
 
         System.out.println(bundle.getString("inserirCpf"));
-        Long cpf = inputNumber.nextLong();
+        long cpf = inputNumber.nextLong();
 
-        while (cpf.toString().length() != 11) {
+        while (Long.toString(cpf).length() != 11) {
             System.out.println(bundle.getString("cpfInvalido"));
             cpf = inputNumber.nextLong();
         }
@@ -197,15 +195,11 @@ public class DataBase {
 
             if (cpf.equals(funcionario0.getCpf())) {
 
-                if (funcionario0 instanceof Pj) {
-
-                    Pj funcionario = (Pj) funcionario0;
+                if (funcionario0 instanceof Pj funcionario) {
 
                     System.out.println(funcionario);
 
-                } else if (funcionario0 instanceof Clt) {
-
-                    Clt funcionario = (Clt) funcionario0;
+                } else if (funcionario0 instanceof Clt funcionario) {
 
                     System.out.println(funcionario);
 

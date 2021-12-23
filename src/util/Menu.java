@@ -2,14 +2,15 @@ package util;
 
 import system.*;
 
+import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
 
 public class Menu {
 
-    private Locale locale = new Locale("en","US");
-    private ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
+    private final Locale locale = Locale.getDefault();
+    private final ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
     private final Scanner inputNumber = new Scanner(System.in).useLocale(locale);
     private final Scanner inputString = new Scanner(System.in).useLocale(locale);
     private final DataBase dataBase;
@@ -21,18 +22,24 @@ public class Menu {
     public void abrirMenu() {
 
         System.out.println(bundle.getString("qualOperacao"));
-
         System.out.println(bundle.getString("cadastrar"));
         System.out.println(bundle.getString("consultar"));
         System.out.println(bundle.getString("editar"));
         System.out.println(bundle.getString("excluir"));
         System.out.println(bundle.getString("encerrar") + "\n");
 
-        int intOpcao = inputNumber.nextInt();
+        try {
 
-        //TODO: adicionar try catch
+            int intOpcao = inputNumber.nextInt();
+            executarAcao(intOpcao);
 
-        executarAcao(intOpcao);
+        } catch (InputMismatchException e) {
+            //e.printStackTrace();
+
+            inputNumber.nextLine();
+            opcaoInvalida();
+
+        }
 
     }
 
@@ -48,12 +55,7 @@ public class Menu {
 
             case 4 -> excluir();
 
-            case 5 -> {
-
-                System.out.println(bundle.getString("encerrando"));
-                System.exit(0);
-
-            }
+            case 5 -> encerrar();
 
             default -> opcaoInvalida();
 
@@ -94,9 +96,7 @@ public class Menu {
 
                 Clt funcionarioClt = dataBase.cadastrarClt();
 
-                boolean contemCpf = verificaCpf(funcionarioClt.getCpf());
-
-                if (!contemCpf) {
+                if (verificaCpf(funcionarioClt.getCpf())) {
 
                     dataBase.cadastrar(funcionarioClt);
 
@@ -188,14 +188,14 @@ public class Menu {
 
             System.out.println(bundle.getString("opcaoInvalida"));
 
-            stringOpcao = inputString.nextLine();
+            stringOpcao = inputString.nextLine().toUpperCase();
 
-        } while (!stringOpcao.equalsIgnoreCase("S") && !stringOpcao.equalsIgnoreCase("N"));
+        } while (!stringOpcao.equals("S") && !stringOpcao.equals("N"));
 
         switch (stringOpcao) {
             case "S" -> abrirMenu();
 
-            case "N" -> System.exit(0);
+            case "N" -> encerrar();
 
         }
     }
@@ -210,7 +210,7 @@ public class Menu {
 
             case "S" -> abrirMenu();
 
-            case "N" -> System.exit(0);
+            case "N" -> encerrar();
 
             default -> opcaoInvalida();
         }
@@ -248,6 +248,13 @@ public class Menu {
         }
 
         return funcionario;
+    }
+
+    public void encerrar(){
+
+        System.out.println(bundle.getString("encerrando"));
+        System.exit(0);
+
     }
 
 }

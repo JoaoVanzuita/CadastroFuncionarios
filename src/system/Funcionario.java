@@ -11,7 +11,7 @@ public abstract class Funcionario {
     protected Date dataNasc;
     protected double salario;
 
-    public Funcionario(String nome, char sexo, Long cpf, Date dataNasc, double salario) {
+    public Funcionario(String nome, char sexo, long cpf, Date dataNasc, double salario) {
         this.nome = nome;
         this.sexo = sexo;
         this.cpf = cpf;
