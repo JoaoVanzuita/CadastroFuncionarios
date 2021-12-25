@@ -15,6 +15,7 @@ public class DataBase {
     private final Scanner inputNumber = new Scanner(System.in).useLocale(locale);
     private final Scanner inputString = new Scanner(System.in).useLocale(locale);
     private final ArrayList<Funcionario> listaFuncionarios = new ArrayList<>();
+    Menu menu = new Menu(this);
 
 
     public void cadastrar(Funcionario funcionario) {
@@ -28,12 +29,17 @@ public class DataBase {
     }
 
     public String inserirNome() {
-        System.out.println(bundle.getString("inserirNome"));
 
-        return inputString.nextLine();
+        System.out.println(bundle.getString("inserirNome"));
+        String nome = inputString.nextLine();
+
+        return nome;
     }
 
     public String inserirSexo() {
+
+        //TODO: adicionar try catch
+
         System.out.println(bundle.getString("inserirSexo"));
         String sexo = inputString.next();
 
@@ -45,39 +51,65 @@ public class DataBase {
         return sexo;
     }
 
+    //CÓDIGO DO MÉTODO CONCLUÍDO
     public Long inserirCpf() {
 
-        //TODO: adicionar try catch
+        String cpf;
+        long cpfRetorno = 0;
 
-        long cpf = 0;
-
-        try {
+        do {
 
             System.out.println(bundle.getString("inserirCpf"));
-            cpf = inputNumber.nextLong();
+            cpf = inputNumber.nextLine();
 
-        }catch (InputMismatchException e) {
+            if(cpf.length() != 11){
+
+                System.out.println(bundle.getString("cpfInvalido"));
+
+            }
+
+        }while (cpf.length() != 11);
+
+        try{
+
+            cpfRetorno = Long.parseLong(cpf);
+
+        }catch (NumberFormatException e){
 
             //e.printStackTrace();
 
+            System.out.println(bundle.getString("ocorreuErro") + " (NumberFormatException)");
+
         }
 
-        while (Long.toString(cpf).length() != 11) {
-            System.out.println(bundle.getString("cpfInvalido"));
-            cpf = inputNumber.nextLong();
-        }
-
-        return cpf;
+            return cpfRetorno;
     }
 
     public Date inserirDataNasc() throws ParseException {
 
-        System.out.println(bundle.getString("inserirData"));
-        String dataNasc = inputString.next();
+        //TODO: adicionar try catch
 
-        while (dataNasc.charAt(2) != '/' || dataNasc.charAt(5) != '/' || dataNasc.length() != 10) {
+        String dataNasc = "";
+
+        System.out.println(bundle.getString("inserirData"));
+
+        try {
+
+            dataNasc = inputString.next();
+
+        }catch(InputMismatchException e){
+
+            //e.printStackTrace();
+
+            System.out.println(bundle.getString("ocorreuErro") + " (InputMismatchException)");
+
+        }
+
+        while (dataNasc.length() > 0 && (dataNasc.charAt(2) != '/' || dataNasc.charAt(5) != '/' || dataNasc.length() != 10) ) {
+
             System.out.println(bundle.getString("dataInvalida"));
             dataNasc = inputString.next();
+
         }
 
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/uuuu");
@@ -88,6 +120,7 @@ public class DataBase {
 
     public double inserirSalario() {
 
+        //TODO: inserir String e converter para double; adicionar try catch
 
         double salario;
 
@@ -107,7 +140,7 @@ public class DataBase {
 
     public double inserirValeTransporte(double salario) {
 
-        //TODO: adicionar try catch
+        //TODO: inserir String e converter para double; adicionar try catch
 
         System.out.println(bundle.getString("inserirValeTransporte"));
         double valeTransporte = inputNumber.nextDouble();
@@ -123,7 +156,7 @@ public class DataBase {
 
     public double inserirValeSaude(double salario) {
 
-        //TODO: adicionar try catch
+        //TODO: inserir String e converter para double; adicionar try catch
 
         System.out.println(bundle.getString("inserirValeSaude"));
         double valeSaude = inputNumber.nextDouble();
@@ -183,6 +216,7 @@ public class DataBase {
 
         Date dataNasc = null;
 
+        //TODO: inserir try catch no método "inserirDataNasc()"
         try {
 
             dataNasc = inserirDataNasc();
@@ -233,6 +267,8 @@ public class DataBase {
 
     public void editarClt(Clt funcionarioClt) {
 
+        //TODO: analisar transferência do método para Menu.java
+
         System.out.println(bundle.getString("digiteOpcao") + funcionarioClt.getNome());
         System.out.println(bundle.getString("nome"));
         System.out.println(bundle.getString("sexo"));
@@ -242,9 +278,10 @@ public class DataBase {
         System.out.println(bundle.getString("valeTransporte"));
         System.out.println(bundle.getString("valeSaude"));
 
+        //TODO: inserir String e converter para int; adicionar try catch
+
         int intOpcao = inputNumber.nextInt();
 
-        //TODO: adicionar try catch
 
         switch (intOpcao) {
 
@@ -334,7 +371,7 @@ public class DataBase {
         System.out.println(bundle.getString("dataNasc"));
         System.out.println(bundle.getString("salario"));
 
-        //TODO: adicionar try catch
+        //TODO: inserir String e converter para int; adicionar try catch
 
         int intOpcao = inputNumber.nextInt();
 
