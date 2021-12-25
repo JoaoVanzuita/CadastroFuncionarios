@@ -12,8 +12,7 @@ public class DataBase {
 
     private Locale locale = Locale.getDefault();
     private ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
-    private final Scanner inputNumber = new Scanner(System.in).useLocale(locale);
-    private final Scanner inputString = new Scanner(System.in).useLocale(locale);
+    private final Scanner input = new Scanner(System.in).useLocale(locale);
     private final ArrayList<Funcionario> listaFuncionarios = new ArrayList<>();
     Menu menu = new Menu(this);
 
@@ -31,7 +30,7 @@ public class DataBase {
     public String inserirNome() {
 
         System.out.println(bundle.getString("inserirNome"));
-        String nome = inputString.nextLine();
+        String nome = input.nextLine();
 
         return nome;
     }
@@ -41,11 +40,11 @@ public class DataBase {
         //TODO: adicionar try catch
 
         System.out.println(bundle.getString("inserirSexo"));
-        String sexo = inputString.next();
+        String sexo = input.next();
 
         while (!sexo.equalsIgnoreCase("M") && !sexo.equalsIgnoreCase("F")) {
             System.out.println(bundle.getString("sexoInvalido"));
-            sexo = inputString.next();
+            sexo = input.next();
         }
 
         return sexo;
@@ -60,7 +59,7 @@ public class DataBase {
         do {
 
             System.out.println(bundle.getString("inserirCpf"));
-            cpf = inputNumber.nextLine();
+            cpf = input.nextLine();
 
             if(cpf.length() != 11){
 
@@ -85,89 +84,168 @@ public class DataBase {
             return cpfRetorno;
     }
 
+    //CÓDIGO DO MÉTODO CONCLUÍDO
     public Date inserirDataNasc(){
 
-        String dataNasc = "";
+        String dataNasc;
+        boolean isValide = false;
+        Date dataFormatada = null;
 
-        System.out.println(bundle.getString("inserirData"));
+        do {
 
-        dataNasc = inputString.nextLine();
+            System.out.println(bundle.getString("inserirData"));
+            dataNasc = input.nextLine();
 
-        while (dataNasc.length() > 0 && (dataNasc.charAt(2) != '/' || dataNasc.charAt(5) != '/' || dataNasc.length() != 10) ) {
+            if((dataNasc.charAt(2) != '/' || dataNasc.charAt(5) != '/' || dataNasc.length() != 10)) {
 
-            System.out.println(bundle.getString("dataInvalida"));
-            dataNasc = inputString.next();
+                System.out.println(bundle.getString("dataInvalida"));
 
-        }
+            }else{
+
+                isValide = true;
+
+            }
+
+        }while(isValide == false);
 
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         formato.setLenient (false);
 
-        Date dataFormatada = null;
-
         try {
 
-            System.out.println(dataNasc);
             dataFormatada = formato.parse(dataNasc);
 
         } catch (ParseException e) {
 
-            e.printStackTrace();
+            //e.printStackTrace();
 
             System.out.println(bundle.getString("ocorreuErro") + " (ParseException)");
+
         }
 
         return dataFormatada;
     }
 
-    public double inserirSalario() {
+    //CÓDIGO DO MÉTODO CONCLUÍDO
+    public double inserirSalario(String tipo) {
 
-        //TODO: inserir String e converter para double; adicionar try catch
+        String stringSalario;
+        boolean isValide = false;
+        double salario = 0;
 
-        double salario;
+        do{
 
-        System.out.println(bundle.getString("inserirSalario"));
+            System.out.println(bundle.getString("inserirSalario"));
+            stringSalario = input.nextLine();
 
-        salario = inputNumber.nextDouble();
+            try {
 
+                salario = Double.parseDouble(stringSalario);
 
-        while (salario < 1192.40) {
-            System.out.println(bundle.getString("salarioInvalido"));
-            salario = inputNumber.nextDouble();
+                if (tipo.equals("clt")) {
 
-        }
+                    if (salario < 1192.40) {
+
+                        System.out.println(bundle.getString("salarioInvalido"));
+
+                    }else{
+
+                        isValide = true;
+
+                    }
+                }
+
+            } catch (NumberFormatException e) {
+
+                //e.printStackTrace();
+
+                System.out.println(bundle.getString("ocorreuErro") + " (NumberFormatException)");
+
+            }
+
+        }while(isValide == false);
 
         return salario;
     }
 
+    //CÓDIGO DO MÉTODO CONCLUÍDO
     public double inserirValeTransporte(double salario) {
 
-        //TODO: inserir String e converter para double; adicionar try catch
+        String vale;
+        boolean isValide = false;
+        double valeTransporte = 0;
 
-        System.out.println(bundle.getString("inserirValeTransporte"));
-        double valeTransporte = inputNumber.nextDouble();
+        do {
 
-        while (valeTransporte > salario * 0.2 || valeTransporte < salario * 0.1) {
-            System.out.println(bundle.getString("valeTransporteInvalido") +
-                    bundle.getString("valorSalario") + salario + "\n 10%: " + salario * 0.1 + "\n 20%: " + salario * 0.2);
-            valeTransporte = inputNumber.nextDouble();
-        }
+            System.out.println(bundle.getString("inserirValeTransporte"));
+
+            vale = input.nextLine();
+
+            try {
+
+                valeTransporte = Double.parseDouble(vale);
+
+                if(valeTransporte > salario * 0.2 || valeTransporte < salario * 0.1){
+
+                    System.out.println(bundle.getString("valeTransporteInvalido") +
+                            bundle.getString("valorSalario") + salario + "\n 10%: " + salario * 0.1 + "\n 20%: " + salario * 0.2);
+
+                }else{
+
+                    isValide = true;
+
+                }
+
+            } catch (NumberFormatException e) {
+
+                //e.printStackTrace();
+
+                System.out.println(bundle.getString("ocorreuErro") + " (NumberFormatException)");
+
+            }
+
+        }while(isValide == false);
 
         return valeTransporte;
     }
 
+    //CÓDIGO DO MÉTODO CONCLUÍDO
     public double inserirValeSaude(double salario) {
 
-        //TODO: inserir String e converter para double; adicionar try catch
+        String vale;
+        boolean isValide = false;
+        double valeSaude = 0;
 
-        System.out.println(bundle.getString("inserirValeSaude"));
-        double valeSaude = inputNumber.nextDouble();
+        do {
 
-        while (valeSaude > salario * 0.25 || valeSaude < salario * 0.15) {
-            System.out.println(bundle.getString("valeSaudeInvalido") +
-                    bundle.getString("valorSalario") + salario + "\n 15%: " + salario * 0.15 + "\n 25%: " + salario * 0.25);
-            valeSaude = inputNumber.nextDouble();
-        }
+            System.out.println(bundle.getString("inserirValeSaude"));
+
+            vale = input.nextLine();
+
+            try {
+
+                valeSaude = Double.parseDouble(vale);
+
+                if(valeSaude > salario * 0.25 || valeSaude < salario * 0.15){
+
+                    System.out.println(bundle.getString("valeSaudeInvalido") +
+                            bundle.getString("valorSalario") + salario + "\n 15%: " + salario * 0.15 + "\n 25%: " + salario * 0.25);
+
+                }else{
+
+                    isValide = true;
+
+                }
+
+            } catch (NumberFormatException e) {
+
+                //e.printStackTrace();
+
+                System.out.println(bundle.getString("ocorreuErro") + " (NumberFormatException)");
+
+            }
+
+        }while(isValide == false);
 
         return valeSaude;
     }
@@ -184,7 +262,7 @@ public class DataBase {
 
         Date dataNasc = inserirDataNasc();
 
-        double salario = inserirSalario();
+        double salario = inserirSalario("clt");
 
         double valeTransporte = inserirValeTransporte(salario);
 
@@ -205,7 +283,7 @@ public class DataBase {
 
         Date dataNasc = inserirDataNasc();
 
-        double salario = inserirSalario();
+        double salario = inserirSalario("pj");
 
         return new Pj(nome, sexo, cpf, dataNasc, salario);
     }
@@ -252,7 +330,7 @@ public class DataBase {
         System.out.println(bundle.getString("valeSaude"));
 
 
-        String opcao = inputNumber.next();
+        String opcao = input.next();
         int intOpcao = Integer.parseInt(opcao);
 
         switch (intOpcao) {
@@ -293,7 +371,7 @@ public class DataBase {
 
             case 5 -> {
 
-                double salario = inserirSalario();
+                double salario = inserirSalario("clt");
 
                 funcionarioClt.setSalario(salario);
 
@@ -330,7 +408,7 @@ public class DataBase {
         System.out.println(bundle.getString("dataNasc"));
         System.out.println(bundle.getString("salario"));
 
-        String opcao = inputNumber.next();
+        String opcao = input.next();
         int intOpcao = Integer.parseInt(opcao);
 
         switch (intOpcao) {
@@ -375,7 +453,7 @@ public class DataBase {
 
             case 5 -> {
 
-                double salario = inserirSalario();
+                double salario = inserirSalario("pj");
 
                 funcionarioPj.setSalario(salario);
 
