@@ -85,25 +85,13 @@ public class DataBase {
             return cpfRetorno;
     }
 
-    public Date inserirDataNasc() throws ParseException {
-
-        //TODO: adicionar try catch
+    public Date inserirDataNasc(){
 
         String dataNasc = "";
 
         System.out.println(bundle.getString("inserirData"));
 
-        try {
-
-            dataNasc = inputString.next();
-
-        }catch(InputMismatchException e){
-
-            //e.printStackTrace();
-
-            System.out.println(bundle.getString("ocorreuErro") + " (InputMismatchException)");
-
-        }
+        dataNasc = inputString.nextLine();
 
         while (dataNasc.length() > 0 && (dataNasc.charAt(2) != '/' || dataNasc.charAt(5) != '/' || dataNasc.length() != 10) ) {
 
@@ -112,10 +100,24 @@ public class DataBase {
 
         }
 
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/uuuu");
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         formato.setLenient (false);
 
-        return formato.parse(dataNasc);
+        Date dataFormatada = null;
+
+        try {
+
+            System.out.println(dataNasc);
+            dataFormatada = formato.parse(dataNasc);
+
+        } catch (ParseException e) {
+
+            e.printStackTrace();
+
+            System.out.println(bundle.getString("ocorreuErro") + " (ParseException)");
+        }
+
+        return dataFormatada;
     }
 
     public double inserirSalario() {
@@ -180,20 +182,7 @@ public class DataBase {
 
         Long cpf = inserirCpf();
 
-        Date dataNasc = null;
-
-        try {
-
-            dataNasc = inserirDataNasc();
-
-        } catch (ParseException e) {
-
-            //e.printStackTrace();
-            System.out.println(bundle.getString("ocorreuErro") + " (ParseException)");
-
-            cadastrarClt();
-
-        }
+        Date dataNasc = inserirDataNasc();
 
         double salario = inserirSalario();
 
@@ -214,22 +203,7 @@ public class DataBase {
 
         Long cpf = inserirCpf();
 
-        Date dataNasc = null;
-
-        //TODO: inserir try catch no método "inserirDataNasc()"
-        try {
-
-            dataNasc = inserirDataNasc();
-
-        } catch (ParseException e) {
-
-            //e.printStackTrace();
-
-            System.out.println(bundle.getString("ocorreuErro") + " (ParseException)");
-
-            cadastrarPj();
-
-        }
+        Date dataNasc = inserirDataNasc();
 
         double salario = inserirSalario();
 
@@ -257,6 +231,7 @@ public class DataBase {
         }
     }
 
+    //CÓDIGO DO MÉTODO CONCLUÍDO
     public void excluirFuncionario(Funcionario funcionario) {
 
         listaFuncionarios.remove(funcionario);
@@ -267,8 +242,6 @@ public class DataBase {
 
     public void editarClt(Clt funcionarioClt) {
 
-        //TODO: analisar transferência do método para Menu.java
-
         System.out.println(bundle.getString("digiteOpcao") + funcionarioClt.getNome());
         System.out.println(bundle.getString("nome"));
         System.out.println(bundle.getString("sexo"));
@@ -278,10 +251,9 @@ public class DataBase {
         System.out.println(bundle.getString("valeTransporte"));
         System.out.println(bundle.getString("valeSaude"));
 
-        //TODO: inserir String e converter para int; adicionar try catch
 
-        int intOpcao = inputNumber.nextInt();
-
+        String opcao = inputNumber.next();
+        int intOpcao = Integer.parseInt(opcao);
 
         switch (intOpcao) {
 
@@ -313,20 +285,7 @@ public class DataBase {
 
             case 4 -> {
 
-                Date dataNasc = null;
-
-                try {
-
-                    dataNasc = inserirDataNasc();
-
-                } catch (ParseException e) {
-
-                    //e.printStackTrace();
-
-                    System.out.println(bundle.getString("ocorreuErro"));
-
-                    editarClt(funcionarioClt);
-                }
+                Date dataNasc = inserirDataNasc();
 
                 funcionarioClt.setDataNasc(dataNasc);
 
@@ -371,9 +330,8 @@ public class DataBase {
         System.out.println(bundle.getString("dataNasc"));
         System.out.println(bundle.getString("salario"));
 
-        //TODO: inserir String e converter para int; adicionar try catch
-
-        int intOpcao = inputNumber.nextInt();
+        String opcao = inputNumber.next();
+        int intOpcao = Integer.parseInt(opcao);
 
         switch (intOpcao) {
 
@@ -408,21 +366,7 @@ public class DataBase {
 
             case 4 -> {
 
-                Date dataNasc = null;
-
-                try {
-
-                    dataNasc = inserirDataNasc();
-
-                } catch (ParseException e) {
-
-                    //e.printStackTrace();
-
-                    System.out.println(bundle.getString("ocorreuErro") + " (ParseException)");
-
-                    editarPj(funcionarioPj);
-
-                }
+                Date dataNasc = inserirDataNasc();
 
                 funcionarioPj.setDataNasc(dataNasc);
 

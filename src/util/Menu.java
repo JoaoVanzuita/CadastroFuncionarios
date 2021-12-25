@@ -19,6 +19,7 @@ public class Menu {
         this.dataBase = database;
     }
 
+    //CÓDIGO DO MÉTODO CONCLUÍDO
     public void abrirMenu() {
 
         System.out.println(bundle.getString("qualOperacao"));
@@ -224,17 +225,25 @@ public class Menu {
 
     }
 
+    //CÓDIGO DO MÉTODO CONCLUÍDO
     public void opcaoInvalida() {
 
-        String stringOpcao;
+        String stringOpcao = "";
 
         do {
 
             System.out.println(bundle.getString("opcaoInvalida"));
 
-            //TODO: adicionar try catch
+            try {
+                stringOpcao = inputString.nextLine().toUpperCase();
 
-            stringOpcao = inputString.nextLine().toUpperCase();
+            }catch (InputMismatchException e){
+
+                //e.printStackTrace();
+
+                System.out.println(bundle.getString("ocorreuErro" + " (InputMismatchException)"));
+
+            }
 
         } while (!stringOpcao.equals("S") && !stringOpcao.equals("N"));
 
@@ -246,13 +255,24 @@ public class Menu {
         }
     }
 
-    public void desejaAbrirMenu() {
+    //CÓDIGO DO MÉTODO CONCLUÍDO
+    public void desejaAbrirMenu(){
+
+        String stringOpcao = "";
 
         System.out.println(bundle.getString("desejaAbrirMenu"));
 
-        //TODO: adicionar try catch
+        try {
 
-        String stringOpcao = inputString.next();
+            stringOpcao = inputString.nextLine();
+
+        }catch (InputMismatchException e){
+
+            //e.printStackTrace();
+
+            System.out.println(bundle.getString("ocorreuErro") + " (InputMismatchException)");
+
+        }
 
         switch (stringOpcao.toUpperCase()) {
 
@@ -264,6 +284,7 @@ public class Menu {
         }
     }
 
+    //CÓDIGO DO MÉTODO CONCLUÍDO
     public boolean verificaCpf(Long cpf) {
 
         boolean contemCpf = false;
@@ -282,6 +303,7 @@ public class Menu {
         return contemCpf;
     }
 
+    //CÓDIGO DO MÉTODO CONCLUÍDO
     public Funcionario encontrarFuncionario(Long cpf) {
 
         Funcionario funcionario = null;
@@ -298,6 +320,7 @@ public class Menu {
         return funcionario;
     }
 
+    //CÓDIGO DO MÉTODO CONCLUÍDO
     public void encerrar(){
 
         System.out.println(bundle.getString("encerrando"));

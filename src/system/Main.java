@@ -22,7 +22,9 @@ public class Main {
         dataBase.cadastrar(pj);
          */
 
-        menu.abrirMenu();
+        //menu.desejaAbrirMenu();
+
+        dataBase.inserirDataNasc();
 
     }
 }
