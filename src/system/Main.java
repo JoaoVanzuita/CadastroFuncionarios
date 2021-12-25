@@ -3,6 +3,9 @@ package system;
 import util.DataBase;
 import util.Menu;
 
+import java.text.ParseException;
+import java.util.Date;
+
 public class Main {
 
     public static void main(String[] args) {
@@ -19,7 +22,6 @@ public class Main {
         dataBase.cadastrar(pj);
          */
 
-        //menu.alterarIdioma();
         menu.abrirMenu();
 
     }

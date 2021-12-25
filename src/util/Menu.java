@@ -104,7 +104,9 @@ public class Menu {
 
         System.out.println(bundle.getString("pjOuClt"));
 
-        String stringOpcao = inputString.nextLine();
+        //TODO: adicionar try catch
+
+        String stringOpcao = inputString.next();
 
         switch (stringOpcao.toUpperCase()) {
 
@@ -155,6 +157,8 @@ public class Menu {
 
     private void consulta() {
 
+        //TODO: adicionar try catch, ler como String e converter com parse do Wrapper
+
         Long cpf = dataBase.inserirCpf();
 
 
@@ -171,6 +175,8 @@ public class Menu {
     }
 
     private void edicaoCadastro() {
+
+        //TODO: adicionar try catch, ler como String e converter com parse do Wrapper
 
         Long cpf = dataBase.inserirCpf();
 
@@ -199,6 +205,8 @@ public class Menu {
 
     private void excluir() {
 
+        //TODO: adicionar try catch, ler como String e converter com parse do Wrapper
+
         Long cpf = dataBase.inserirCpf();
 
         if (!verificaCpf(cpf)) {
@@ -224,6 +232,8 @@ public class Menu {
 
             System.out.println(bundle.getString("opcaoInvalida"));
 
+            //TODO: adicionar try catch
+
             stringOpcao = inputString.nextLine().toUpperCase();
 
         } while (!stringOpcao.equals("S") && !stringOpcao.equals("N"));
@@ -239,6 +249,8 @@ public class Menu {
     public void desejaAbrirMenu() {
 
         System.out.println(bundle.getString("desejaAbrirMenu"));
+
+        //TODO: adicionar try catch
 
         String stringOpcao = inputString.next();
 
