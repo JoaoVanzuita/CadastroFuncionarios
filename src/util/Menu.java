@@ -30,6 +30,8 @@ public class Menu {
         System.out.println(bundle.getString("alterarIdioma"));
         System.out.println(bundle.getString("encerrar") + "\n");
 
+        //TODO: inserir String e converter com Wrapper
+
         try {
 
             int intOpcao = inputNumber.nextInt();
@@ -105,9 +107,7 @@ public class Menu {
 
         System.out.println(bundle.getString("pjOuClt"));
 
-        //TODO: adicionar try catch
-
-        String stringOpcao = inputString.next();
+        String stringOpcao = inputString.nextLine();
 
         switch (stringOpcao.toUpperCase()) {
 
@@ -134,7 +134,7 @@ public class Menu {
 
                 Clt funcionarioClt = dataBase.cadastrarClt();
 
-                if (verificaCpf(funcionarioClt.getCpf())) {
+                if (!verificaCpf(funcionarioClt.getCpf())) {
 
                     dataBase.cadastrar(funcionarioClt);
 
@@ -235,6 +235,7 @@ public class Menu {
             System.out.println(bundle.getString("opcaoInvalida"));
 
             try {
+
                 stringOpcao = inputString.nextLine().toUpperCase();
 
             }catch (InputMismatchException e){

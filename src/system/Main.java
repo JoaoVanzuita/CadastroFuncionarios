@@ -9,7 +9,6 @@ public class Main {
         DataBase dataBase = new DataBase();
         Menu menu = new Menu(dataBase);
 
-
         /*Caso queira iniciar com registros pré cadastrados para testes
 
         Clt clt  = new Clt("Teste Clt", 'M', 12345678900L, "17/05/2004", 5500, 850, 850 );

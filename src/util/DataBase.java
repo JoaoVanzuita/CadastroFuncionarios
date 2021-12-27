@@ -14,7 +14,6 @@ public class DataBase {
     private ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
     private final Scanner input = new Scanner(System.in).useLocale(locale);
     private final ArrayList<Funcionario> listaFuncionarios = new ArrayList<>();
-    Menu menu = new Menu(this);
 
 
     public void cadastrar(Funcionario funcionario) {
@@ -40,11 +39,11 @@ public class DataBase {
         //TODO: adicionar try catch
 
         System.out.println(bundle.getString("inserirSexo"));
-        String sexo = input.next();
+        String sexo = input.nextLine();
 
         while (!sexo.equalsIgnoreCase("M") && !sexo.equalsIgnoreCase("F")) {
             System.out.println(bundle.getString("sexoInvalido"));
-            sexo = input.next();
+            sexo = input.nextLine();
         }
 
         return sexo;
@@ -59,6 +58,7 @@ public class DataBase {
         do {
 
             System.out.println(bundle.getString("inserirCpf"));
+
             cpf = input.nextLine();
 
             if(cpf.length() != 11){
@@ -142,9 +142,7 @@ public class DataBase {
 
                 salario = Double.parseDouble(stringSalario);
 
-                if (tipo.equals("clt")) {
-
-                    if (salario < 1192.40) {
+                    if (tipo.equalsIgnoreCase("clt") && salario < 1192.40) {
 
                         System.out.println(bundle.getString("salarioInvalido"));
 
@@ -153,7 +151,7 @@ public class DataBase {
                         isValide = true;
 
                     }
-                }
+
 
             } catch (NumberFormatException e) {
 
@@ -330,7 +328,7 @@ public class DataBase {
         System.out.println(bundle.getString("valeSaude"));
 
 
-        String opcao = input.next();
+        String opcao = input.nextLine();
         int intOpcao = Integer.parseInt(opcao);
 
         switch (intOpcao) {
@@ -408,7 +406,7 @@ public class DataBase {
         System.out.println(bundle.getString("dataNasc"));
         System.out.println(bundle.getString("salario"));
 
-        String opcao = input.next();
+        String opcao = input.nextLine();
         int intOpcao = Integer.parseInt(opcao);
 
         switch (intOpcao) {
