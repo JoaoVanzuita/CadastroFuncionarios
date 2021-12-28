@@ -11,8 +11,7 @@ public class Menu {
 
     private Locale locale = Locale.getDefault();
     private ResourceBundle bundle = ResourceBundle.getBundle("messages", locale);
-    private final Scanner inputNumber = new Scanner(System.in).useLocale(locale);
-    private final Scanner inputString = new Scanner(System.in).useLocale(locale);
+    private final Scanner input = new Scanner(System.in).useLocale(locale);
     private final DataBase dataBase;
 
     public Menu(DataBase database) {
@@ -30,26 +29,39 @@ public class Menu {
         System.out.println(bundle.getString("alterarIdioma"));
         System.out.println(bundle.getString("encerrar") + "\n");
 
-        //TODO: inserir String e converter com Wrapper
+        String opcao;
+        int intOpcao = 0;
 
-        try {
+        do{
 
-            int intOpcao = inputNumber.nextInt();
-            executarAcao(intOpcao);
+            opcao = input.nextLine();
 
-        } catch (InputMismatchException e) {
-            //e.printStackTrace();
+            try {
 
-            inputNumber.nextLine();
-            opcaoInvalida();
+                intOpcao = Integer.parseInt(opcao);
 
-        }
+            }catch (NumberFormatException e) {
 
+                //e.printStackTrace();
+
+                System.out.println(bundle.getString("ocorreuErro") + " (NumberFormatException)");
+
+            }catch(Exception e){
+
+                //e.printStackTrace();
+
+                System.out.println(bundle.getString("erroDesconhecido"));
+
+            }
+
+        }while (intOpcao == 0);
+
+        executarAcao(intOpcao);
     }
 
-    public void executarAcao(int opcao) {
+    public void executarAcao(int intOpcao) {
 
-        switch (opcao) {
+        switch (intOpcao) {
 
             case 1 -> cadastro();
 
@@ -107,7 +119,7 @@ public class Menu {
 
         System.out.println(bundle.getString("pjOuClt"));
 
-        String stringOpcao = inputString.nextLine();
+        String stringOpcao = input.nextLine();
 
         switch (stringOpcao.toUpperCase()) {
 
@@ -158,10 +170,7 @@ public class Menu {
 
     private void consulta() {
 
-        //TODO: adicionar try catch, ler como String e converter com parse do Wrapper
-
         Long cpf = dataBase.inserirCpf();
-
 
         if (!verificaCpf(cpf)) {
 
@@ -176,8 +185,6 @@ public class Menu {
     }
 
     private void edicaoCadastro() {
-
-        //TODO: adicionar try catch, ler como String e converter com parse do Wrapper
 
         Long cpf = dataBase.inserirCpf();
 
@@ -206,8 +213,6 @@ public class Menu {
 
     private void excluir() {
 
-        //TODO: adicionar try catch, ler como String e converter com parse do Wrapper
-
         Long cpf = dataBase.inserirCpf();
 
         if (!verificaCpf(cpf)) {
@@ -228,23 +233,13 @@ public class Menu {
     //CÓDIGO DO MÉTODO CONCLUÍDO
     public void opcaoInvalida() {
 
-        String stringOpcao = "";
+        String stringOpcao;
 
         do {
 
             System.out.println(bundle.getString("opcaoInvalida"));
 
-            try {
-
-                stringOpcao = inputString.nextLine().toUpperCase();
-
-            }catch (InputMismatchException e){
-
-                //e.printStackTrace();
-
-                System.out.println(bundle.getString("ocorreuErro" + " (InputMismatchException)"));
-
-            }
+            stringOpcao = input.nextLine().toUpperCase();
 
         } while (!stringOpcao.equals("S") && !stringOpcao.equals("N"));
 
@@ -259,21 +254,9 @@ public class Menu {
     //CÓDIGO DO MÉTODO CONCLUÍDO
     public void desejaAbrirMenu(){
 
-        String stringOpcao = "";
-
         System.out.println(bundle.getString("desejaAbrirMenu"));
 
-        try {
-
-            stringOpcao = inputString.nextLine();
-
-        }catch (InputMismatchException e){
-
-            //e.printStackTrace();
-
-            System.out.println(bundle.getString("ocorreuErro") + " (InputMismatchException)");
-
-        }
+        String stringOpcao = input.nextLine();
 
         switch (stringOpcao.toUpperCase()) {
 

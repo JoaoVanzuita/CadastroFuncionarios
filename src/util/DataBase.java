@@ -29,22 +29,26 @@ public class DataBase {
     public String inserirNome() {
 
         System.out.println(bundle.getString("inserirNome"));
-        String nome = input.nextLine();
 
-        return nome;
+        return input.nextLine();
     }
 
     public String inserirSexo() {
 
-        //TODO: adicionar try catch
+        String sexo;
 
-        System.out.println(bundle.getString("inserirSexo"));
-        String sexo = input.nextLine();
+        do {
 
-        while (!sexo.equalsIgnoreCase("M") && !sexo.equalsIgnoreCase("F")) {
-            System.out.println(bundle.getString("sexoInvalido"));
+            System.out.println(bundle.getString("inserirSexo"));
             sexo = input.nextLine();
-        }
+
+            if(!sexo.equalsIgnoreCase("M") && !sexo.equalsIgnoreCase("F")){
+
+                System.out.println(bundle.getString("cpfInvalido"));
+
+            }
+
+        }while (!sexo.equalsIgnoreCase("M") && !sexo.equalsIgnoreCase("F"));
 
         return sexo;
     }
@@ -79,6 +83,12 @@ public class DataBase {
 
             System.out.println(bundle.getString("ocorreuErro") + " (NumberFormatException)");
 
+        }catch(Exception e){
+
+            //e.printStackTrace();
+
+            System.out.println(bundle.getString("erroDesconhecido"));
+
         }
 
             return cpfRetorno;
@@ -87,8 +97,9 @@ public class DataBase {
     //CÓDIGO DO MÉTODO CONCLUÍDO
     public Date inserirDataNasc(){
 
+        //TODO: substituir Date por Calendar
+
         String dataNasc;
-        boolean isValide = false;
         Date dataFormatada = null;
 
         do {
@@ -100,16 +111,12 @@ public class DataBase {
 
                 System.out.println(bundle.getString("dataInvalida"));
 
-            }else{
-
-                isValide = true;
-
             }
 
-        }while(isValide == false);
+        }while((dataNasc.charAt(2) != '/' || dataNasc.charAt(5) != '/' || dataNasc.length() != 10));
 
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-        formato.setLenient (false);
+        formato.setLenient(false);
 
         try {
 
@@ -120,6 +127,12 @@ public class DataBase {
             //e.printStackTrace();
 
             System.out.println(bundle.getString("ocorreuErro") + " (ParseException)");
+
+        }catch(Exception e){
+
+            //e.printStackTrace();
+
+            System.out.println(bundle.getString("erroDesconhecido"));
 
         }
 
@@ -159,6 +172,12 @@ public class DataBase {
 
                 System.out.println(bundle.getString("ocorreuErro") + " (NumberFormatException)");
 
+            }catch(Exception e){
+
+                //e.printStackTrace();
+
+                System.out.println(bundle.getString("erroDesconhecido"));
+
             }
 
         }while(isValide == false);
@@ -170,7 +189,6 @@ public class DataBase {
     public double inserirValeTransporte(double salario) {
 
         String vale;
-        boolean isValide = false;
         double valeTransporte = 0;
 
         do {
@@ -188,10 +206,6 @@ public class DataBase {
                     System.out.println(bundle.getString("valeTransporteInvalido") +
                             bundle.getString("valorSalario") + salario + "\n 10%: " + salario * 0.1 + "\n 20%: " + salario * 0.2);
 
-                }else{
-
-                    isValide = true;
-
                 }
 
             } catch (NumberFormatException e) {
@@ -200,9 +214,15 @@ public class DataBase {
 
                 System.out.println(bundle.getString("ocorreuErro") + " (NumberFormatException)");
 
+            }catch(Exception e){
+
+                //e.printStackTrace();
+
+                System.out.println(bundle.getString("erroDesconhecido"));
+
             }
 
-        }while(isValide == false);
+        }while(valeTransporte > salario * 0.2 || valeTransporte < salario * 0.1);
 
         return valeTransporte;
     }
@@ -211,7 +231,6 @@ public class DataBase {
     public double inserirValeSaude(double salario) {
 
         String vale;
-        boolean isValide = false;
         double valeSaude = 0;
 
         do {
@@ -229,10 +248,6 @@ public class DataBase {
                     System.out.println(bundle.getString("valeSaudeInvalido") +
                             bundle.getString("valorSalario") + salario + "\n 15%: " + salario * 0.15 + "\n 25%: " + salario * 0.25);
 
-                }else{
-
-                    isValide = true;
-
                 }
 
             } catch (NumberFormatException e) {
@@ -241,9 +256,15 @@ public class DataBase {
 
                 System.out.println(bundle.getString("ocorreuErro") + " (NumberFormatException)");
 
+            }catch(Exception e){
+
+                //e.printStackTrace();
+
+                System.out.println(bundle.getString("erroDesconhecido"));
+
             }
 
-        }while(isValide == false);
+        }while(valeSaude > salario * 0.25 || valeSaude < salario * 0.15);
 
         return valeSaude;
     }
@@ -406,8 +427,32 @@ public class DataBase {
         System.out.println(bundle.getString("dataNasc"));
         System.out.println(bundle.getString("salario"));
 
-        String opcao = input.nextLine();
-        int intOpcao = Integer.parseInt(opcao);
+        String opcao;
+        int intOpcao = 0;
+
+        do{
+
+            opcao = input.nextLine();
+
+            try {
+
+                intOpcao = Integer.parseInt(opcao);
+
+            } catch (NumberFormatException e) {
+
+                //e.printStackTrace();
+
+                System.out.println(bundle.getString("ocorreuErro") + " (NumberFormatException)");
+
+            }catch(Exception e){
+
+                //e.printStackTrace();
+
+                System.out.println(bundle.getString("erroDesconhecido"));
+
+            }
+
+        }while (intOpcao == 0);
 
         switch (intOpcao) {
 
