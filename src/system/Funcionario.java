@@ -5,8 +5,6 @@ import java.util.Objects;
 
 public abstract class Funcionario {
 
-    //TODO: substituir Date por Calendar
-
     protected String nome;
     protected char sexo;
     protected Long cpf;

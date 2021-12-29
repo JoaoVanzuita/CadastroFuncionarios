@@ -53,7 +53,6 @@ public class DataBase {
         return sexo;
     }
 
-    //CÓDIGO DO MÉTODO CONCLUÍDO
     public Long inserirCpf() {
 
         String cpf;
@@ -94,10 +93,7 @@ public class DataBase {
             return cpfRetorno;
     }
 
-    //CÓDIGO DO MÉTODO CONCLUÍDO
     public Date inserirDataNasc(){
-
-        //TODO: substituir Date por Calendar
 
         String dataNasc;
         Date dataFormatada = null;
@@ -115,7 +111,7 @@ public class DataBase {
 
         }while((dataNasc.charAt(2) != '/' || dataNasc.charAt(5) != '/' || dataNasc.length() != 10));
 
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy", new Locale("pt","BR"));
         formato.setLenient(false);
 
         try {
@@ -139,7 +135,6 @@ public class DataBase {
         return dataFormatada;
     }
 
-    //CÓDIGO DO MÉTODO CONCLUÍDO
     public double inserirSalario(String tipo) {
 
         String stringSalario;
@@ -185,7 +180,6 @@ public class DataBase {
         return salario;
     }
 
-    //CÓDIGO DO MÉTODO CONCLUÍDO
     public double inserirValeTransporte(double salario) {
 
         String vale;
@@ -227,7 +221,6 @@ public class DataBase {
         return valeTransporte;
     }
 
-    //CÓDIGO DO MÉTODO CONCLUÍDO
     public double inserirValeSaude(double salario) {
 
         String vale;
@@ -328,7 +321,6 @@ public class DataBase {
         }
     }
 
-    //CÓDIGO DO MÉTODO CONCLUÍDO
     public void excluirFuncionario(Funcionario funcionario) {
 
         listaFuncionarios.remove(funcionario);

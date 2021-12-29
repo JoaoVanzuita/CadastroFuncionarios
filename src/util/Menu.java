@@ -2,7 +2,6 @@ package util;
 
 import system.*;
 
-import java.util.InputMismatchException;
 import java.util.Locale;
 import java.util.ResourceBundle;
 import java.util.Scanner;
@@ -18,7 +17,6 @@ public class Menu {
         this.dataBase = database;
     }
 
-    //CÓDIGO DO MÉTODO CONCLUÍDO
     public void abrirMenu() {
 
         System.out.println(bundle.getString("qualOperacao"));
@@ -230,7 +228,6 @@ public class Menu {
 
     }
 
-    //CÓDIGO DO MÉTODO CONCLUÍDO
     public void opcaoInvalida() {
 
         String stringOpcao;
@@ -251,7 +248,6 @@ public class Menu {
         }
     }
 
-    //CÓDIGO DO MÉTODO CONCLUÍDO
     public void desejaAbrirMenu(){
 
         System.out.println(bundle.getString("desejaAbrirMenu"));
@@ -268,7 +264,6 @@ public class Menu {
         }
     }
 
-    //CÓDIGO DO MÉTODO CONCLUÍDO
     public boolean verificaCpf(Long cpf) {
 
         boolean contemCpf = false;
@@ -287,7 +282,6 @@ public class Menu {
         return contemCpf;
     }
 
-    //CÓDIGO DO MÉTODO CONCLUÍDO
     public Funcionario encontrarFuncionario(Long cpf) {
 
         Funcionario funcionario = null;
@@ -304,7 +298,6 @@ public class Menu {
         return funcionario;
     }
 
-    //CÓDIGO DO MÉTODO CONCLUÍDO
     public void encerrar(){
 
         System.out.println(bundle.getString("encerrando"));

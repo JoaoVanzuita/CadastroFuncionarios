@@ -14,7 +14,8 @@ public class Main {
 
         /*Caso queira iniciar com registros pré cadastrados para testes
 
-            Date data = new Da  te(1084752000000L);
+            Date data = new Date(1084752000000L);
+            // 17/05/2004
 
             Clt clt  = new Clt("Teste Clt", 'M', 12345678900L, data, 5500, 850, 850 );
             Pj pj = new Pj("Teste Pj", 'M', 98765432100L, data, 5500);
